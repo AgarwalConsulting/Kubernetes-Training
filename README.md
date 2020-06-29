@@ -4,34 +4,21 @@
 
 ## Setup
 
-```bash
-  curl https://raw.githubusercontent.com/AgarwalConsulting/java-training/master/code-samples/11-kubernetes/install.sh -o /tmp/install.sh
-  chmod 744 /tmp/install.sh
-  /tmp/install.sh
-```
-
-Or clone the repo and run `./install.sh`
+* kubectl
+* [kind](https://github.com/kubernetes-sigs/kind/)
 
 ## Getting Started
 
-### Single node cluster using minikube
+### Single node cluster using kind
 
 ```bash
-  minikube start --vm-driver=kvm2
-
-  . source.sh
+  kind create cluster
 ```
 
 ### Multi node cluster using Kind
 
-[Kubernetes in Docker](https://github.com/kubernetes-sigs/kind/)
-
-Follow steps in [setup-proxy.md](https://github.com/AgarwalConsulting/java-training/blob/master/code-samples/11-kubernetes/setup-proxy.md)
-
 ```bash
-  ./build-image.sh
-
-  kind create cluster --config kind-config.yml
+kind create cluster --config kind-config.yml
 ```
 
 ## Outline
