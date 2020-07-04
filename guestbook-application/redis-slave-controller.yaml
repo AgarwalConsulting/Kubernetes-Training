@@ -1,17 +1,18 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-slave
   labels:
-    name: redis-slave
+    app: redis-slave
 spec:
   replicas: 2
   selector:
-    name: redis-slave
+    matchLabels:
+      app: redis-slave
   template:
     metadata:
       labels:
-        name: redis-slave
+        app: redis-slave
     spec:
       containers:
       - name: worker
