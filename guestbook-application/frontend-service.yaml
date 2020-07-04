@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: frontend
   labels:
-    name: frontend
+    app: frontend
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the frontend service.
@@ -14,4 +14,4 @@ spec:
     - port: 80
       nodePort: 30080
   selector:
-    name: frontend
+    app: frontend
