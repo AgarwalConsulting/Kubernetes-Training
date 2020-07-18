@@ -57,6 +57,7 @@
   - Rollouts
   - Configuration
     - Strategy
+  - Init containers
 - Configmap
 - Secrets
 - Volumes
