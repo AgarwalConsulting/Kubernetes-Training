@@ -4,7 +4,7 @@
 
 ## Setup
 
-* kubectl
+* `kubectl`
 * [kind](https://github.com/kubernetes-sigs/kind/)
 
 ## Getting Started
@@ -12,13 +12,21 @@
 ### Single node cluster using kind
 
 ```bash
-  kind create cluster
+kind create cluster
 ```
 
 ### Multi node cluster using Kind
 
+* Create
+
 ```bash
 kind create cluster --config kind-config.yml
+```
+
+* Destroy
+
+```bash
+kind delete cluster --name kind
 ```
 
 ## Outline
@@ -29,12 +37,7 @@ kind create cluster --config kind-config.yml
 
 * Namespace
 * Control Plane
-* Creating your first deployment
-
-  `kubectl create deployment gs-rest --image=gauravagarwalr/spring-greeting:latest`
-
-* Setup Kubernetes [dashboard](https://github.com/kubernetes/dashboard)
-* Creating a guestbook service
+* Workers
 
 ## Resources
 
