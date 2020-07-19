@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-master
+  name: gs-rest
   labels:
-    app: redis-master
+    app: gs-rest
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: redis-master
+      app: gs-rest
   template:
     metadata:
       labels:
-        app: redis-master
+        app: gs-rest
     spec:
       containers:
-      - name: master
-        image: redis:3.0.7-alpine
+      - name: spring-greeting
+        image: agarwalconsulting/spring-greeting:latest
         ports:
-        - containerPort: 6379
+          - name: gs-port
+            containerPort: 8080
         resources:
           requests:
             memory: "256Mi"
