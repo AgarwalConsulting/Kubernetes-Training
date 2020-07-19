@@ -20,13 +20,13 @@ kind create cluster
 * Create
 
 ```bash
-kind create cluster --config kind-config.yml
+make k8s-kind-create
 ```
 
 * Destroy
 
 ```bash
-kind delete cluster --name kind
+make k8s-kind-delete
 ```
 
 ## Outline
