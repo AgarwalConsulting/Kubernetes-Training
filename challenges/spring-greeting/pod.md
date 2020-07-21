@@ -1,8 +1,12 @@
 # Pod
 
-- Create a pod for `agarwalconsulting/spring-greeting`
-  - Using `kubectl`
-  - Using spec file
+- Create a pod for `agarwalconsulting/spring-greeting`, either
+
+  - Using `kubectl run ...`
+
+  (or)
+
+  - Using spec file `kubectl create/apply -f ...`
     - Either `yaml` or `json`
 
 ## Step 1: Craft a pod.yaml file
