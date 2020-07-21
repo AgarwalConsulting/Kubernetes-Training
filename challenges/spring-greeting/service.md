@@ -1,12 +1,14 @@
 # Service
 
 - Update the pod spec for `agarwalconsulting/spring-greeting`
-- Add `labels` under `metadata`
+- Change `labels` under `metadata`, to
 
   ```
     labels:
       app: greeting-api
   ```
+
+remove `version`.
 
 ## Step 1: Craft a service.yaml file
 
