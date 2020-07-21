@@ -11,7 +11,7 @@
 
 Each Kubernetes object has an `apiVersion`, a `kind`, a `metadata` section, and a `spec` section that holds the details.
 
-1. Create a new file in this `start` directory named `pod.yaml`
+1. Create a new file in this directory named `pod.yaml`
 
 2. Write these lines:
 
