@@ -4,8 +4,24 @@
 
 ## Setup
 
-* `kubectl`
-* [kind](https://github.com/kubernetes-sigs/kind/)
+- [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+
+- [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+
+### Test Setup
+
+```bash
+kind version
+```
+
+  kind v0.8.1 go1.14.2 darwin/amd64
+
+```bash
+kubectl version
+```
+
+  Client Version: version.Info{Major:"", Minor:"", GitVersion:"v0.0.0-master+$Format:%h$", GitCommit:"$Format:%H$", GitTreeState:"", BuildDate:"1970-01-01T00:00:00Z", GoVersion:"go1.14", Compiler:"gc", Platform:"darwin/amd64"}
+  The connection to the server localhost:8080 was refused - did you specify the right host or port?
 
 ## Getting Started
 
@@ -17,13 +33,13 @@ kind create cluster
 
 ### Multi node cluster using Kind
 
-* Create
+- Create
 
 ```bash
 make k8s-kind-create
 ```
 
-* Destroy
+- Destroy
 
 ```bash
 make k8s-kind-delete
@@ -35,19 +51,14 @@ make k8s-kind-delete
 
 [Glossary](https://kubernetes.io/docs/reference/glossary)
 
-* Namespace
-* Control Plane
-* Workers
+- Namespace
+- Control Plane
+- Worker Plane
 
 ## Resources
 
 In-browser Hands-on: [Playground](https://www.katacoda.com/courses/kubernetes)
 
-Workshops:
-
-* [Basic](https://github.com/gsaslis/kubernetes-basics-workshop)
-* [Advanced](https://github.com/GoogleCloudPlatform/kubernetes-workshops)
-
 Videos:
 
-* [Kubernetes 101 Workshop](https://www.youtube.com/watch?v=H-FKBoWTVws)
+- [Kubernetes 101 Workshop](https://www.youtube.com/watch?v=H-FKBoWTVws)
