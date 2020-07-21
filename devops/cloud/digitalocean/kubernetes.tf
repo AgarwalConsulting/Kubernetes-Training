@@ -2,7 +2,7 @@ resource "digitalocean_kubernetes_cluster" "training_cluster" {
   name    = "training-cluster"
   region  = "nyc3"
   # Grab the latest version slug from `doctl kubernetes options versions`
-  version = "1.17.5-do.0"
+  version = "1.18.3-do.0"
   tags = [ "Go-Training" ]
   vpc_uuid = digitalocean_vpc.vpc_101.id
 
