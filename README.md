@@ -4,9 +4,13 @@
 
 ## Setup
 
-- [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- `kubectl` [Install](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-- [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+  command line tool which allows for simulating multi node k8s cluster
+
+- `kind` [Install](https://kind.sigs.k8s.io/docs/user/quick-start/)
+
+  command line tool which lets you control Kubernetes clusters
 
 ### Test Setup
 
