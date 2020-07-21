@@ -125,7 +125,7 @@ Dizzy?  Me too.  :D
 
 ## Get the logs
 
-Let's get the console logs from Kubernetes.
+Let's get the logs from Kubernetes.
 
 1. From the command prompt:
 
