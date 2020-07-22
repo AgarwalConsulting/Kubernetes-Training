@@ -8,15 +8,31 @@ spec:
       emptyDir: {}
 
   containers:
+
     - name: log-creator
       image: busybox
       command: ["sh","-c","while true; do echo $(date) - Some activity >> /var/log/activity.log; sleep 10; done"]
+      resources:
+        requests:
+          cpu: 100m
+          memory: 20Mi
+        limits:
+          cpu: 500m
+          memory: 100Mi
       volumeMounts:
         - name: shared-logs
           mountPath: /var/log
+
     - name: log-shipper
       image: busybox
       command: ["sh","-c","while true; do cat /var/log/activity.log; sleep 10; done"]
+      resources:
+        requests:
+          cpu: 100m
+          memory: 20Mi
+        limits:
+          cpu: 500m
+          memory: 100Mi
       volumeMounts:
         - name: shared-logs
           mountPath: /var/log

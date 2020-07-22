@@ -6,7 +6,9 @@ metadata:
 data:
   MONGO_INITDB_ROOT_USERNAME: mongoadmin
   MONGO_INITDB_ROOT_PASSWORD: secret
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
