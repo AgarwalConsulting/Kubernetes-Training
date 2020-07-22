@@ -3,8 +3,7 @@ kind: Pod
 metadata:
   name: spring-greeting
   labels:
-    app: spring-greeting
-    version: v0.1
+    app: greeting-api
 spec:
   containers:
   - name: spring-greeting
@@ -19,8 +18,7 @@ kind: Pod
 metadata:
   name: spring-greeting-2
   labels:
-    app: spring-greeting
-    version: v0.1
+    app: greeting-api
 spec:
   containers:
   - name: spring-greeting
