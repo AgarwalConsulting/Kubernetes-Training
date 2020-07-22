@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: agarwalconsulting/versioned-nginx:liveness
+        image: agarwalconsulting/versioned-nginx:v1
       initContainers:
       - name: random-wait
         image: busybox:1.28
