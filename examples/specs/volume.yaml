@@ -20,8 +20,7 @@ spec:
   volumes:
     - name: shared-logs
       emptyDir: {}
-    # - name: test-volume
     #   # This GCE PD must already exist.
-    #   gcePersistentDisk:
-    #     pdName: my-data-disk
-    #     fsType: ext4
+      # gcePersistentDisk:
+      #   pdName: my-data-disk
+      #   fsType: ext4

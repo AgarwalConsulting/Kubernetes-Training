@@ -15,4 +15,4 @@ spec:
         memory: 100Mi
     env:
       - name: DURATION
-        value: "10"
+        value: "2"

@@ -33,3 +33,6 @@ spec:
             name: mongodb-config
         ports:
         - containerPort: 27017
+
+## Port forward: kubectl port-forward pod/mongodb-deployment-xxx 27017:27017
+## Connection string: mongodb://<username>:<password>@localhost/admin
