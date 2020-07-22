@@ -3,9 +3,6 @@ kind: Pod
 metadata:
   name: fib
 spec:
-  volumes:
-    - name: shared-logs
-      emptyDir: {}
   containers:
   - image: agarwalconsulting/fib-gen:alpine
     name: generator
@@ -20,3 +17,11 @@ spec:
       limits:
         cpu: 500m
         memory: 100Mi
+  volumes:
+    - name: shared-logs
+      emptyDir: {}
+    # - name: test-volume
+    #   # This GCE PD must already exist.
+    #   gcePersistentDisk:
+    #     pdName: my-data-disk
+    #     fsType: ext4
