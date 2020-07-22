@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-greeting
+  labels:
+    app: spring-greeting
+    version: v0.1
+spec:
+  containers:
+  - name: spring-greeting
+    image: agarwalconsulting/spring-greeting
+    ports:
+    - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-greeting-2
+  labels:
+    app: spring-greeting
+    version: v0.1
+spec:
+  containers:
+  - name: spring-greeting
+    image: agarwalconsulting/spring-greeting
+    ports:
+    - containerPort: 8080
