@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fib
+spec:
+  volumes:
+    - name: shared-logs
+      emptyDir: {}
+  containers:
+  - image: agarwalconsulting/fib-gen:alpine
+    name: generator
+    command: ["sh", "-c", "/app/fib >> /var/log/activity.log"]
+    volumeMounts:
+      - name: shared-logs
+        mountPath: /var/log
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 500m
+        memory: 100Mi
