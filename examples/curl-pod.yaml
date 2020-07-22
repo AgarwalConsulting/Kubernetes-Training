@@ -1,0 +1,15 @@
+# kubectl exec -it pod/curl -- bash
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+  labels:
+    app: ubuntu-curl
+spec:
+  containers:
+  - name: ubuntu-curl
+    image: agarwalconsulting/ubuntu-curl
+    args:
+    - sleep
+    - "1000"
