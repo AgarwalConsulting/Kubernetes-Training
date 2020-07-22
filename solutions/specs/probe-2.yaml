@@ -29,6 +29,8 @@ spec:
           httpGet:
             path: /
             port: 80
+          failureThreshold: 1
+          periodSeconds: 3
         livenessProbe:
           # exec:
           #   command:
@@ -37,6 +39,8 @@ spec:
           httpGet:
             path: /
             port: 80
+          failureThreshold: 1
+          periodSeconds: 3
       initContainers:
       - name: random-wait
         image: busybox:1.28
