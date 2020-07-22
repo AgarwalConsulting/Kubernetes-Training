@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-api-deployment
+spec:
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 2
+  replicas: 10
+  selector:
+    matchLabels:
+      app: greeting-api
+  template:
+    metadata:
+      name: spring-greeting
+      labels:
+        app: greeting-api
+    spec:
+      containers:
+      - name: spring-greeting
+        image: agarwalconsulting/spring-greeting
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 20Mi
+          limits:
+            cpu: 500m
+            memory: 100Mi
