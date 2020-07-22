@@ -8,6 +8,13 @@ spec:
   containers:
   - name: liveness
     image: agarwalconsulting/versioned-nginx:liveness
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 500m
+        memory: 100Mi
     livenessProbe:
       httpGet:
         path: /
@@ -15,7 +22,9 @@ spec:
       initialDelaySeconds: 3
       periodSeconds: 3
       failureThreshold: 2
+
 ---
+
 kind: Service
 apiVersion: v1
 metadata:
