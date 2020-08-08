@@ -6,3 +6,4 @@ region = ""
 zone = ""
 
 vm_name = "gcp-vm-101"
+instance_count = 1

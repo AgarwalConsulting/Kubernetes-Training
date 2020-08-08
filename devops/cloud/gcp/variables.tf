@@ -6,3 +6,4 @@ variable "region" {}
 variable "zone" {}
 
 variable "vm_name" {}
+variable "instance_count" {}

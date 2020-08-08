@@ -1,7 +1,8 @@
 resource "google_compute_instance" "gcp_vm_101" {
+  count        = var.instance_count
   project      = var.project_id
   zone         = var.zone
-  name         = var.vm_name
+  name         = "${var.vm_name}-${count.index}"
   machine_type = "n1-standard-4"
 
   allow_stopping_for_update = true
