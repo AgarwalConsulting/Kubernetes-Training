@@ -1,7 +1,7 @@
 resource "google_compute_instance" "gcp_101_control" {
   project      = var.project_id
   zone         = var.zone
-  name         = var.vm_name
+  name         = var.control_vm_name
   machine_type = "n1-standard-4"
 
   allow_stopping_for_update = true
