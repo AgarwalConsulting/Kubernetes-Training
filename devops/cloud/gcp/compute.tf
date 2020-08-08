@@ -16,6 +16,7 @@ resource "google_compute_instance" "gcp_vm_101" {
   network_interface {
     # A default network is created for all GCP projects
     network       = "default"
+    # network       = google_compute_network.gcp_101.name
     access_config {
     }
   }
