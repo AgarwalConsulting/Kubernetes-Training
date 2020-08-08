@@ -2,14 +2,23 @@
 
 sudo apt-get update
 
-# Installing docker & setting up repo: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-debian-9#:~:text=Add%20the%20Docker%20repository%20to,sudo%20apt%20update
-sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-sudo apt update
-# sudo systemctl status docker
+# https://docs.docker.com/engine/install/ubuntu/
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
 
-sudo apt install -y tar tree tmux screen git htop docker-ce
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+## Installing other tools
+sudo apt install -y tar tree tmux screen git htop
 
 # Install kubeadm, kubectl, kubelet: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
