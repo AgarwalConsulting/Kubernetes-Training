@@ -3,7 +3,7 @@
 #
 
 locals {
-  environment = "development"
+  environment = "demo"
 
   prefix = "aws-101-${local.environment}"
   cluster-name = "${local.prefix}-cluster"
