@@ -1,6 +1,6 @@
-# Kubernetes
+# Basics (2 Days)
 
-## What problem am I trying to solve?
+## Life as a DevOps engineer
 
 - Orchestration
   - Machines
@@ -12,9 +12,10 @@
 - Service Discovery
 - Networking
 
+---
+
 ## Kubernetes Architecture
 
-- Declarative model
 - Intro to Kind / Minikube & Contexts
 - CLI tools
 
@@ -40,16 +41,26 @@
   - Container Resource Monitoring
   - Cluster-level Logging
 
-## Setting up your own cluster (Optional)
+---
 
-## Kubernetes Controllers
+## Kubernetes Concepts
 
 - Namespaces
-- Pods
-  - Resource constraints
-  - Sidecars
-- Services
+
+### Workloads
+
+#### Pods
+
+- Relationship between a pod and container
+- Declarative model
+- Resource constraints primer
+
+- Intro to services
+  - Kubernetes model for connecting containers
   - Labels & selectors
+
+#### Controllers
+
 - Replicasets
   - Scale out & scale in
   - Auto-Healing
@@ -57,22 +68,19 @@
   - Rollouts
   - Configuration
     - Strategy
-  - Init containers
+- Daemonset
+- Statefulset
+- Job
+  - CronJob
+
+### Configuration
+
 - Configmap
 - Secrets
+
+### Storage
+
 - Volumes
   - StorageClass
   - PersistentVolumeClaim
   - PersistentVolume
-- Daemonset
-- Statefulset
-- Job
-
-### Probes
-
-- Liveness Probe
-- Readiness Probe
-
-## Working with helm
-
-## Understanding ingress
