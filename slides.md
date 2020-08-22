@@ -1068,4 +1068,4 @@ Code
 https://github.com/AgarwalConsulting/Kubernetes-Training
 
 Slides
-http://k8s.slides.agarwalconsulting.io/
+https://k8s.slides.agarwalconsulting.io/
