@@ -66,3 +66,15 @@ In-browser Hands-on: [Playground](https://www.katacoda.com/courses/kubernetes)
 Videos:
 
 - [Kubernetes 101 Workshop](https://www.youtube.com/watch?v=H-FKBoWTVws)
+
+## Presentation
+
+Start simple http server
+
+```bash
+python -m http.server
+```
+
+Open `http://localhost:8000`.
+
+Powered by [Remark](https://remarkjs.com). Tips & tricks: https://github.com/gnab/remark/wiki/Markdown.
