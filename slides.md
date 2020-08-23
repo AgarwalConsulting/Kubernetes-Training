@@ -930,7 +930,7 @@ class: center, middle
 ---
 class: center, middle
 
-#### Probes
+#### [Probes](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/notes/workloads/probes.md)
 
 ---
 
