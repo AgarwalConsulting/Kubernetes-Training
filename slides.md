@@ -1241,6 +1241,149 @@ class: center, middle
 ---
 class: center, middle
 
+### Advanced Configuration
+
+---
+class: center, middle
+
+#### Resource Constraints
+
+---
+
+- To properly manage your Kubernetes clusters, it’s important to carefully manage resource usage.
+
+- When you specify a Pod, you can optionally specify how much of each resource a Container needs. The most common resources to specify are CPU and memory (RAM); there are others.
+
+- There are two resource types in Kubernetes: CPU and memory
+
+  - CPU is expressed in units of a CPU core. Either a decimal or with the xxxm format. For example, 0.1 and 100m mean the same thing, or ten percent. The second format is referred to as “millicores”.
+  - Memory is express in bytes, kilobytes, megabytes, etc. The notation is xxMi, xxGi, etc. Note that the units aren’t exactly megabyte, gigabyte, etc. They’re actually mebibyte, gibibyte, etc. But they’re so close that it’s not worth worrying about.
+
+- Resources are specified on containers, not pods. The resources for a pod is simply the sum of all containers specified for it.
+
+---
+
+##### `requests` & `limits`
+
+- There are two ways Kubernetes controls resources such as CPU and memory:
+
+  - Requests – This is the value the container is guaranteed to get when it’s pod is scheduled. If the scheduler can’t find a node with this amount, then the pod wont get scheduled.
+  - Limits – This it the limit placed on the CPU or memory. The container will never use more than this.
+
+- Requests can never be higher than limits. Kubernetes will throw an error.
+
+- These values are assigned to containers, not pods.
+
+---
+
+##### Sample: `requests` & `limits`
+
+```yaml
+containers:
+  - name: container1
+    image: myimage:v1
+    resources:
+      requests:
+        memory: “64Mi”
+        cpu: ”200m”
+      limits:
+        memory: “128Mi”
+        cpu: “600m”
+ - name: container2
+    image: myotherimage:v1
+    resources:
+      requests:
+        memory: “32Mi”
+        cpu: ”100m”
+      limits:
+        memory: “64Mi”
+        cpu: “300m”
+```
+
+> Total for pod
+
+Total CPU request: 300 millicore
+Total memory request: 96 Mi
+
+Total CPU limit: 900 millicore
+Total memory limit: 192 Mi
+
+---
+
+> What happens when you don’t specify a CPU limit?
+
+- The container has no upper bound, and could use all of the available CPU available on it’s node.
+
+- If the namespace has a default limit, then it will inherit that.
+
+---
+
+##### `namespace` settings
+
+- In an ideal world, everyone will behave and set their limits appropriately.
+
+- But in reality, people forget to put proper limits, or make limits that are too high. Engineers tend to overprovision because it’s easier than managing things. They may set requests and limits that are higher than their fair share and waste node capacity.
+
+- To prevent this, you can set ResourceQuotas and LimitRanges at the namespace level.
+
+---
+
+##### `ResourceQuota`
+
+`ResourceQuotas` set limits for all containers in the namespace. Note this is not a per node quota.
+
+- You can use this to keep a team in check for example. If you have several teams using the same Kubernetes cluster, then this prevents any one team from consuming too many CPU and memory units.
+
+  - Requests.cpu – this is the total requests for CPU for all containers in the namespace.
+  - Requests.memory – this is the total requests for memory for all containers in the namespace.
+  - Limits.cpu – the total limits for all containers in the namespace
+  - Limits.memory – the total limits for all containers in the namespace
+
+---
+class: center, middle
+
+##### Example: ResourceQuota
+
+- File: [examples/specs/resources/resourcequota.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/resources/resourcequota.yaml)
+
+---
+
+##### `LimitRange`
+
+Unlike a quota, a LimitRange applies to any container rather than the total for all containers in a namespace.
+
+- This can prevent people from creating super small or super large containers. You can set the minimum and maximum values to ensure that all containers are given reasonable limits.
+
+- `Default` sets default CPU and memory limit settings if they aren’t specified for a container in a pod.
+
+- `defaultRequest` sets the default requests for CPU and memory if they aren’t specified for a container in a pod.
+
+- `min` and `max` set the limits on an individual container.
+
+---
+class: center, middle
+
+##### Example: LimitRange
+
+- File: [examples/specs/resources/limitrange.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/resources/limitrange.yaml)
+
+---
+
+##### Resource based scheduling
+
+- At the time a pod is scheduled, the scheduler runs checks on nodes to determine if enough capacity exists. CPU and memory is finite on a node, and that capacity is used up, or “reserved” by the existing pods.
+
+- While actual CPU and memory usage will be lower, the scheduler uses the maximum specified to give room for load later.
+
+- If there is less resource available on a node than the pod requests, then the placement is refused and Kubernetes looks at the next node.
+
+- If Kubernetes can’t find a suitable home for a pod, then the pod goes into a “pending” state.
+
+- When Kubernetes places a pod on a node, these resource specifications are handed off to the container runtime (Docker run command).
+
+---
+class: center, middle
+
 # Hackathon: [RVStore](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/rvstore)
 
 ---
