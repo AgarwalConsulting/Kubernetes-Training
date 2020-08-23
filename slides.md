@@ -1076,6 +1076,9 @@ class: center, middle
 
 #### [Scheduling](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/notes/workloads/scheduling.md)
 
+---
+class: center, middle
+
 *In Kubernetes, scheduling refers to making sure that Pods are matched to Nodes so that `kubelet` can run them.*
 
 ---
