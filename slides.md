@@ -1246,7 +1246,7 @@ class: center, middle
 ---
 class: center, middle
 
-#### Resource Constraints
+#### [Resource Constraints](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 
 ---
 
