@@ -45,8 +45,6 @@
 
 ## Kubernetes Concepts
 
-- Namespaces
-
 ### Workloads
 
 #### Pods
@@ -68,10 +66,10 @@
   - Rollouts
   - Configuration
     - Strategy
-- Daemonset
-- Statefulset
 - Job
   - CronJob
+- Daemonset
+- Statefulset
 
 ### Configuration
 

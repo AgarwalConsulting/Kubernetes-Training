@@ -1,7 +1,8 @@
 # Intermediate (3 Days)
 
-## Reusable Apps
+## Reusable Apps & Isolation
 
+- Namespaces
 - Helm
 - Operators
 
@@ -13,6 +14,10 @@
 ---
 
 ## Setting up your own cluster (Optional)
+
+## Working with multiple clusters using `kubectl`
+
+- Understaning `contexts`
 
 ---
 
