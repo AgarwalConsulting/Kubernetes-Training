@@ -782,8 +782,11 @@ class: center, middle
   *These virtual clusters are called namespaces.*
 
 - Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
+
 - Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces.
+
 - Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+
 - Namespaces are a way to [divide cluster resources between](https://kubernetes.io/docs/concepts/policy/resource-quotas/) multiple users.
 
 .content-credits[https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/]
@@ -793,8 +796,11 @@ class: center, middle
 Kubernetes starts with four initial namespaces:
 
 - `default`: The default namespace for objects with no other namespace
+
 - `kube-system`: The namespace for objects created by the Kubernetes system
+
 - `kube-public`: This namespace is created automatically and is readable by all users (including those not authenticated). This namespace is mostly reserved for cluster usage, in case that some resources should be visible and readable publicly throughout the whole cluster. The public aspect of this namespace is only a convention, not a requirement.
+
 - `kube-node-lease`: This namespace for the lease objects associated with each node which improves the performance of the node heartbeats as the cluster scales.
 
 .content-credits[https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/]
@@ -807,7 +813,7 @@ class: center, middle
 ---
 class: center, middle
 
-### Multitenancy
+## Multitenancy
 
 Multitenancy is a reference to the mode of operation of software where multiple independent instances of one or multiple applications operate in a shared environment.
 
@@ -821,7 +827,7 @@ Multitenancy is a reference to the mode of operation of software where multiple 
 ---
 class: center, middle
 
-#### [Helm](https://helm.slides.algogrit.com/)
+### [Helm](https://helm.slides.algogrit.com/)
 
 ---
 class: center, middle
