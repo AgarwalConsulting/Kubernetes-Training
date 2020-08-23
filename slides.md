@@ -233,15 +233,17 @@ class: center, middle
 
 ---
 
-### Overview
-
 - Pods are the smallest deployable units of computing that can be created and managed in Kubernetes.
+
 - A Pod *(as in a pod of whales or pea pod)* is a group of one or more containers *(such as Docker containers)*, with shared storage/network, and a specification for how to run the containers.
+
 - A Pod always runs on a Node.
+
 - Every pod gets a unique IP.
+
 - If multiple containers per pod, pods can communicate with localhost.
 
-### Useful `kubectl` commands
+#### Useful `kubectl` commands
 
 - `kubectl get pods -o`
 - `kubectl describe pods`
@@ -257,6 +259,8 @@ class: center, middle
 ---
 class: center, middle
 
+#### Nodes and Pods
+
 ![Nodes and Pods](assets/images/pods/nodes-ands-pods.png)
 
 ---
@@ -267,7 +271,24 @@ Kubernetes supports *declarative* management of objects
 ---
 class: center, middle
 
-### Writing a pod spec file
+#### Writing a pod spec file
+
+---
+class: center, middle
+
+##### [API Groups](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups)
+
+*The API group is specified in a REST path and in the apiVersion field of a serialized object.*
+
+---
+
+##### [Resource Limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+
+*When you specify a Pod, you can optionally specify how much of each resource a Container needs.*
+
+*The most common resources to specify are **CPU** and **memory (RAM)**; there are others.*
+
+We will look at them in more detail later.
 
 ---
 
@@ -277,22 +298,6 @@ class: center, middle
 - `kubectl diff -f ...`
 - `kubectl delete -f ...`
 - `kubectl create -f ...`
-
----
-class: center, middle
-
-#### [API Groups](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups)
-
-*The API group is specified in a REST path and in the apiVersion field of a serialized object.*
-
----
-class: center, middle
-
-#### [Resource Limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
-
-*When you specify a Pod, you can optionally specify how much of each resource a Container needs.*
-
-*The most common resources to specify are **CPU** and **memory (RAM)**; there are others.*
 
 ---
 class: center, middle
@@ -307,16 +312,11 @@ class: center, middle
 ---
 class: center, middle
 
-#### Exercise: Write a pod spec file for [`agarwalconsulting/spring-greeting`](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting)
-
----
-class: center, middle
-
-## Networking, Load Balancing & Discovery: [`service`](https://kubernetes.io/docs/concepts/services-networking/service/)
+### Networking, Load Balancing & Discovery: [`service`](https://kubernetes.io/docs/concepts/services-networking/service/)
 
 ---
 
-### Overview
+#### Overview
 
 - An abstract way to expose an application running on a set of Pods as a network service.
 
@@ -327,39 +327,26 @@ class: center, middle
 ---
 class: center, middle
 
-#### [Labels & Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)
+##### [Labels & Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)
 
 ---
 
 - Labels are key/value pairs that are attached to objects, such as pods.
-- Selectors are used by controllers to identify pods to work with.
+
+- Selectors are used by controllers/services to identify pods to work with.
+
 - Via a label selector, the client/user can identify a set of objects. The label selector is the core grouping primitive in Kubernetes.
 
 ---
 class: center, middle
 
-#### [ServiceTypes](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
+##### [ServiceTypes](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
+
+ServiceTypes control the way in which a service is exposed.
 
 ---
 
-Type values and their behaviors are:
-
-- **ClusterIP**: Exposes the Service on a cluster-internal IP. Choosing this value makes the Service only reachable from within the cluster. This is the default ServiceType.
-
-- **NodePort**: Exposes the Service on each Node's IP at a static port (the NodePort). A ClusterIP Service, to which the NodePort Service routes, is automatically created. You'll be able to contact the NodePort Service, from outside the cluster, by requesting `<NodeIP>:<NodePort>`.
-
-- **LoadBalancer**: Exposes the Service externally using a cloud provider's load balancer. NodePort and ClusterIP Services, to which the external load balancer routes, are automatically created.
-
-- **ExternalName**: Maps the Service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record
-
----
-class: center, middle
-
-#### Exercise A: Write a service spec for the [same greeting service](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/challenges/spring-greeting/service.md)
-
----
-
-#### Exercise B: Service
+#### Exercise: Service
 
 - File: [examples/specs/service.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/service.yaml)
 - Review the file. Pay attention to the type and ports.
@@ -371,62 +358,29 @@ class: center, middle
 ---
 class: center, middle
 
-### [Init Containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) & Sidecars
-
-*Pods in a Kubernetes cluster can be used in two main ways: Single container, multiple containers.*
-
----
-
-#### Init containers overview
-
-- Init containers run and complete before the app containers are started.
-- Init containers always run to completion.
-- Each init container must complete successfully before the next one starts.
-- Application containers (or app containers) are the containers in a pod that are started after any init containers have completed.
-- Migrations are a good example of this. Eg: [Yaes Server](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/service.yaml#L19)
-
-#### Sidecar overview
-
-- Usually you want to have a pod contain just a single container.
-- However, there are cases when you’d want to have multiple containers in a single pod.
-- The sidecar pattern is an example of this.
-- With a sidecar, you run a second container in a pod whose job is to take action and support the primary container.
-- Logging is a good example, where a sidecar container sends logs from the primary container to a centralized logging system.
-
----
-class: center, middle
-
-*For example, you might have a container that acts as a web server for files in a shared volume, and a separate "sidecar" container that updates those files from a remote source.*
-
-![Sidecar](assets/images/pods/sidecar.png)
-
-.image-credits[https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/]
-
----
-
 #### Exercise
 
-- File: [examples/specs/logshipper.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/logshipper.yaml)
-- Let’s apply it
-- Review all pods
-- Describe the pod
+Write a [pod spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/pod.md) & [service spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/service.md) for the [greeting service](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/challenges/spring-greeting).
 
 ---
 class: center, middle
 
-## Controllers
+### Controllers
 
 ---
-
-### Overview
 
 - In general, users shouldn't need to create Pods directly.
   *You will rarely interact directly with pods, except perhaps viewing logs. You will interact with Deployments or ReplicaSets instead.*
+
 - They should almost always use controllers even for singletons, for example, Deployments.
+
 - Controllers provide self-healing with a cluster scope, as well as replication and rollout management.
+
 - Controllers like StatefulSet can also provide support to stateful Pods.
 
-### Natively Supported Controllers (`kind` field)
+---
+
+#### Natively Supported Controllers (`kind` field)
 
 - ReplicaSet
 - ReplicationController
@@ -439,13 +393,13 @@ class: center, middle
 ---
 class: center, middle
 
-### Generators
+#### Controller Spec generators
 
 `kubectl create --dry-run=client -o yaml`
 
 ---
 
-#### [Supported](https://kubernetes.io/docs/reference/kubectl/conventions/#generators) Generators
+##### [Supported](https://kubernetes.io/docs/reference/kubectl/conventions/#generators) Generators
 
 ```csv
 clusterrole         Create a ClusterRole.
@@ -468,7 +422,7 @@ serviceaccount      Create a service account with the specified name.
 ---
 class: center, middle
 
-### [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
+#### [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
 
 ---
 
@@ -485,17 +439,29 @@ class: center, middle
 ---
 class: center, middle
 
+##### Demo: Defining a replicaset for `fibonacci`
+
+---
+class: center, middle
+
 ![ReplicaSets](assets/images/controllers/replicasets.png)
 
 ---
 
+##### How does it work
+
 So what component in Kubernetes makes sure the specified number of replica pods are running? The answer shows the elegance of Kubernetes’ architecture.
 
 - The [`ReplicationController`](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/) (which is the logic behind the ReplicaSet resource) is always watching the K8s API. When it sees that the number of running pods differs from the ReplicaSet’s configuration, it takes action. It tells K8s to launch pods to make up the gap. The ReplicationController’s job is now done.
+
 - If there are too many pods, the ReplicationController terminates the extra pods. If there are too few, the ReplicationController starts more pods.
+
 - The pod records are created in etcd.
+
 - The scheduler now starts finding nodes for the pods to run.
+
 - When a pod is assigned to a node, the kubelet on the assigned node takes action to start the pod on the node.
+
 - A `ReplicaSet` ensures that a specified number of pod replicas are running at any given time.
 
 ---
@@ -517,28 +483,40 @@ So what component in Kubernetes makes sure the specified number of replica pods 
 ---
 class: center, middle
 
-### [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+#### [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
 ---
 
 - `Deployments` are an abstraction that creates ReplicaSets and manages pods being launched into different ones in a controlled way.
+
 - They are declarative and you provide the end state. Kubernetes takes care of getting your pods to that end state in a managed way.
+
 - On a rollout, K8S creates a new replicaset and starts moving pods to the new one in a controlled way, before removing the old replicaset.
+
 - Note: deployments create a replicaset programmatically. Do not manage the replicaset directly!
+
 - You can see rollout status with: `kubectl rollout status deployment nginx-deployment`
+
 - You can see rollout history with: `kubectl rollout history deployment nginx-deployment`
+
 - You can rollback with: `kubectl rollout undo deployment nginx-deployment`
+
 - You can pause and resume rollouts
 
 ---
 
-#### Rollouts
+##### Rollouts
 
 - When you update the pod definition in your Deployment, the DeploymentController will start a rolling update process. It does this by simply managing ReplicaSets for you. Assume you already have code running in your Deployment.
+
 - A new ReplicaSet is created with the new Pod configuration. The Replicas count is zero.
+
 - The Replicas count will be increased on the new ReplicaSet.
+
 - Once the pods are launched, the Replicas count on the original ReplicaSet are reduced.
+
 - This process will continue until the new ReplicaSet has the original Replicas count and the old ReplicaSet has a Replicas count of zero.
+
 - The old ReplicaSet will hang around empty. By default 10 (which is customizable in your Deployment spec). A rollback will reverse this process.
 
 ---
@@ -549,11 +527,11 @@ class: center, middle
 ---
 class: center, middle
 
-#### Exercise A: Write a deployment spec for the [same greeting service](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/challenges/spring-greeting/deployment.md)
+##### Exercise A: Write a deployment spec for the [same greeting service](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/challenges/spring-greeting/deployment.md)
 
 ---
 
-#### Exercise B: Deployment
+##### Exercise B: Deployment
 
 - File: [examples/specs/deployment.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/deployment.yaml)
 - Review the file. Does it look just like a replicaset? Sure does! Note the image tag of 1.0.
@@ -567,9 +545,13 @@ class: center, middle
 Choosing the right deployment procedure depends on the needs, listed below are some of the possible strategies to adopt:
 
 - **Recreate**: terminate the old version and release the new one
+
 - **RollingUpdate** or *ramped*: release a new version on a rolling update fashion, one after the other
+
 - *blue/green*: release a new version alongside the old version then switch traffic
+
 - *canary*: release a new version to a subset of users, then proceed to a full rollout
+
 - *a/b testing*: release a new version to a subset of users in a precise way (HTTP headers, cookie, weight, etc.). A/B testing is really a technique for making business decisions based on statistics but we will briefly describe the process. This doesn’t come out of the box with Kubernetes, it implies extra work to setup a more advanced infrastructure (Istio, Linkerd, Traefik, custom nginx/haproxy, etc).
 
 .content-credits[https://blog.container-solutions.com/kubernetes-deployment-strategies]
@@ -595,8 +577,11 @@ Choosing the right deployment procedure depends on the needs, listed below are s
 #### Advanced Configuration: Deployments
 
 - We can tweak the settings of Deployments to customize their behavior.
+
 - In the `spec`, you can specify a `strategy` for replacing old pods with new ones. The options are `Recreate` or `RollingUpdate` (default).
+
 - With `Recreate`, all old pods are killed off before the new ones are launched. This means you’ll experience downtime.
+
 - For `RollingUpdate`, you can adjust the behavior.
   - `maxUnavailable` specifies how many pods can be unavailable at any time during rollout. You can specify absolute number or percentage. The default is 25%.
   - `maxSurge` is how many pods can be created over the replicas count. Can be absolute or percentage. The default is 25%.
@@ -605,158 +590,72 @@ Choosing the right deployment procedure depends on the needs, listed below are s
 ---
 class: center, middle
 
-### Probes
+### Job
 
 ---
 
-- A Probe is a diagnostic performed periodically by the kubelet on a Container.
+- Jobs are short-lived processes that create pods to fulfill the work and then cleanup the pods when done.
 
-- Pods and their containers can misbehave. We need to have a way to control how Kubernetes handles them.
+- You can create jobs programmatically, or have timed jobs with CronJobs.
 
-- When a pod becomes unhealthy, we want Kubernetes to be able to restart it.
+- Great for batch operations. Think daily import processes or perhaps an inventory management process that runs periodically. Maybe a backup job.
 
-- Because pods and their containers don’t start up immediately, we want Kubernetes to hold traffic from hitting the pod until it is ready.
-
----
-
-- To perform a diagnostic, the kubelet calls a Handler implemented by the Container. There are three types of handlers:
-
-  - `ExecAction`: Executes a specified command inside the Container.
-    The diagnostic is considered successful if the command exits with a status code of 0.
-
-  - `TCPSocketAction`: Performs a TCP check against the Container's IP address on a specified port.
-    The diagnostic is considered successful if the port is open.
-
-  - `HTTPGetAction`: Performs an HTTP Get request against the Container's IP address on a specified port and path.
-    The diagnostic is considered successful if the response has a status code greater than or equal to 200 and less than 400.
+- Keep in mind that in certain situations the schedule can create multiple jobs based on one CronJob, so design accordingly.
 
 ---
 
-The kubelet can optionally perform and react to three kinds of probes on running Containers:
+#### Exercise: `Job`
 
-- `livenessProbe`: Indicates whether the [Container is running](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-liveness-probe). If the liveness probe fails, the kubelet kills the Container, and the Container is subjected to its restart policy.
+- File: [examples/specs/job.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/job.yaml)
 
-- `readinessProbe`: Indicates whether the [Container is ready to service requests](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-readiness-probe). If the readiness probe fails, the endpoints controller removes the Pod's IP address from the endpoints of all Services that match the Pod. The default state of readiness before the initial delay is Failure.
+- Review the file and apply to your cluster
 
-- `startupProbe`: Indicates whether the [application within the Container is started](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-startup-probe). All other probes are disabled if a startup probe is provided, until it succeeds. If the startup probe fails, the kubelet kills the Container, and the Container is subjected to its restart policy.
+- Review the pods in the cluster, look at output, etc.
 
-If a Container does not provide a liveness, readiness or startup probe, the respective probes default state is Success. [Documentation on configuration here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
-
----
-
-- You can combine multiple probes for a robust pod.
-
-- You have some options to fine tune each probe:
-
-  - `initialDelaySeconds`: Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds. Minimum value is 0.
-
-  - `periodSeconds`: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-
-  - `timeoutSeconds`: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
-
-  - `successThreshold`: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
-
-  - `failureThreshold`: When a probe fails, Kubernetes will try failureThreshold times before giving up. Giving up in case of liveness probe means restarting the container. In case of readiness probe the Pod will be marked Unready. Defaults to 3. Minimum value is 1.
-
----
-
-HTTP probes have additional fields that can be set on `httpGet`:
-
-- `host`: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
-
-- `scheme`: Scheme to use for connecting to the host (HTTP or HTTPS). Defaults to HTTP.
-
-- `path`: Path to access on the HTTP server.
-
-- `httpHeaders`: Custom headers to set in the request. HTTP allows repeated headers.
-
-- `port`: Name or number of the port to access on the container. Number must be in the range 1 to 65535.
-
----
-
-#### Exercise A: Probes
-
-In this exercise, a nginx container starts, but after 30 seconds the index.html file is removed, which causes nginx to no longer return a 200 status code. The probe will pick up on that and restart the container, starting the process over.
-
-- File: [examples/specs/probe.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/probe.yaml)
-- Review the template file. Notice there are two resources in this one!
-- Apply to your cluster.
-- Open a browser and verify that you can access it.
-- `kubectl get all`. Notice the pod’s restarts column.
-- `kubectl describe pod liveness-http`, and notice the output shows the restarts
-- When done, delete the resources using the template file. `kubectl delete –f probe.yaml`
-
----
-
-#### Exercise B: Probes
-
-Now let’s add a readiness probe so that traffic doesn’t get sent to a down pod. This lab includes the same pod from the last lab, but as a deployment with several copies. It has an initContainer that randomly sleeps before starting the main pod.
-
-- File: [examples/specs/probe-2.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/probe-2.yaml)
-- Review the template file.
-- Apply to your cluster.
-- Open a browser and verify that you can access it.
-- After about a minute, you should no longer get a valid response from any pod, because they all get the index.html file removed.
-- Now update the deployment ([documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)) to contain both a readiness probe (to remove the pod from service when it goes down) and a liveness probe (to restart the container when it fails).
-- Run a watch `kubectl get all`, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
-- In a new terminal tab, run a watch `kubectl describe service nginx-service`. Notice the endpoints shifting as the service shuffles pods in and out of service based on their readiness probe status.
-- You should now have a resilient service that stays up. It might occasionally go down if all three pods are broken at the same time. But you get the idea.
+- Delete when done
 
 ---
 class: center, middle
 
-### Volumes
+### DaemonSet
 
 ---
 
-- On-disk files in a Container are ephemeral, which presents some problems for non-trivial applications when running in Containers.
+- Runs a copy of the pod on every node in the cluster.
 
-- First, when a Container crashes, kubelet will restart it, but the files will be lost - the Container starts with a clean state.
+- Any new node will get a new copy of the pod.
 
-- Second, when running Containers together in a Pod it is often necessary to share files between those Containers.
+- Any node removal cleans up the copy of the pod.
 
-- The Kubernetes Volume abstraction solves both of these problems.
+- Useful for system level resources such as monitoring, logging, etc.
+
+- This is how the master pods on the worker nodes run, such as the kube-proxy and kubelet.
+
+---
+class: center, middle
+
+### Stateful Set
 
 ---
 
-#### Comparison with Docker Volumes
+- Works like a deployment, but provides guarantees about the order and uniqueness of pods
 
-- Docker also has a concept of volumes, though it is somewhat looser and less managed.
-- In Docker, a volume is simply a directory on disk or in another Container.
-- Lifetimes are not managed and until very recently there were only local-disk-backed volumes.
-- Docker now provides volume drivers, but the functionality is very limited for now (as of v1.7).
+- Pods get a consistent naming scheme that is ordered. For example, pod-0, pod-1, pod-2, etc.
 
-#### Kubernetes Volumes
+- The spec is identical, except for the Kind statement
 
-- A Kubernetes volume, on the other hand, has an explicit lifetime - the same as the Pod that encloses it.
-- Consequently, a volume outlives any Containers that run within the Pod, and data is preserved across Container restarts.
-- Of course, when a Pod ceases to exist, the volume will cease to exist, too.
-- At its core, a volume is just a directory, possibly with some data in it, which is accessible to the Containers in a Pod.
+- Stable, persistent storage
 
----
+- Not typical. You should aim for stateless components if possible and use Deployments instead.
 
-- How that directory comes to be, the medium that backs it, and the contents of it are determined by the particular volume type used.
+- Useful when you have a group of servers that work together and need to know each others’ names ahead of time.
 
-- Volumes can be a variety of types, from the host hard drive to cloud storage volumes like AWS EBS.
-
-- To read up on the details: https://kubernetes.io/docs/concepts/storage/volumes/
-
-- K8S volumes include lots of management automatically, such as mounting your EBS volumes to pods and unmounting them.
-
-- This topic can get messy. We’re going to dive into more depth on an intermediate class when we create our infrastructure on a cloud.
+- For example, we could create an ElasticSearch cluster that uses StatefulSets.
 
 ---
+class: center, middle
 
-There are a few key **resource types**:
-
-- `PersistentVolume` – defines a storage volume in your cluster.
-  PersistentVolumes are a way for users to "claim" [durable storage](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) without knowing the details of the particular cloud environment.
-
-- `StorageClass` – defines what "classes" of storage you’ll offer in your cluster.
-  When used, provides a dynamically created PersistentVolume.
-
-- `PersistentVolumeClaim` – are a request for storage from a PersistentVolume.
-  Can be part or all of the PersistentVolume. You’re making a "claim" on a volume.
+## Configuration
 
 ---
 
@@ -811,66 +710,53 @@ There are a few key **resource types**:
 Note: for simplicity, the secret and deployment are together. Don’t do this in a real world scenario.
 
 ---
+
 class: center, middle
 
-### DaemonSet
-
----
-
-- Runs a copy of the pod on every node in the cluster.
-
-- Any new node will get a new copy of the pod.
-
-- Any node removal cleans up the copy of the pod.
-
-- Useful for system level resources such as monitoring, logging, etc.
-
-- This is how the master pods on the worker nodes run, such as the kube-proxy and kubelet.
+## Storage
 
 ---
 class: center, middle
 
-### Stateful Set
+### Volumes
 
 ---
 
-- Works like a deployment, but provides guarantees about the order and uniqueness of pods
+- On-disk files in a Container are ephemeral, which presents some problems for non-trivial applications when running in Containers.
 
-- Pods get a consistent naming scheme that is ordered. For example, pod-0, pod-1, pod-2, etc.
+- First, when a Container crashes, kubelet will restart it, but the files will be lost - the Container starts with a clean state.
 
-- The spec is identical, except for the Kind statement
+- Second, when running Containers together in a Pod it is often necessary to share files between those Containers.
 
-- Stable, persistent storage
-
-- Not typical. You should aim for stateless components if possible and use Deployments instead.
-
-- Useful when you have a group of servers that work together and need to know each others’ names ahead of time.
-
-- For example, we could create an ElasticSearch cluster that uses StatefulSets.
-
----
-class: center, middle
-
-### Job
+- The Kubernetes Volume abstraction solves both of these problems.
 
 ---
 
-- Jobs are short-lived processes that create pods to fulfill the work and then cleanup the pods when done.
+#### Comparison with Docker Volumes
 
-- You can create jobs programmatically, or have timed jobs with CronJobs.
+- Docker also has a concept of volumes, though it is somewhat looser and less managed.
+- In Docker, a volume is simply a directory on disk or in another Container.
+- Lifetimes are not managed and until very recently there were only local-disk-backed volumes.
+- Docker now provides volume drivers, but the functionality is very limited for now (as of v1.7).
 
-- Great for batch operations. Think daily import processes or perhaps an inventory management process that runs periodically. Maybe a backup job.
+#### Kubernetes Volumes
 
-- Keep in mind that in certain situations the schedule can create multiple jobs based on one CronJob, so design accordingly.
+- A Kubernetes volume, on the other hand, has an explicit lifetime - the same as the Pod that encloses it.
+- Consequently, a volume outlives any Containers that run within the Pod, and data is preserved across Container restarts.
+- Of course, when a Pod ceases to exist, the volume will cease to exist, too.
+- At its core, a volume is just a directory, possibly with some data in it, which is accessible to the Containers in a Pod.
 
 ---
 
-#### Exercise: `Job`
+- How that directory comes to be, the medium that backs it, and the contents of it are determined by the particular volume type used.
 
-- File: [examples/specs/job.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/job.yaml)
-- Review the file and apply to your cluster
-- Review the pods in the cluster, look at output, etc.
-- Delete when done
+- Volumes can be a variety of types, from the host hard drive to cloud storage volumes like AWS EBS.
+
+- To read up on the details: https://kubernetes.io/docs/concepts/storage/volumes/
+
+- K8S volumes include lots of management automatically, such as mounting your EBS volumes to pods and unmounting them.
+
+- This topic can get messy. We’re going to dive into more depth on it later when we create our infrastructure on a cloud.
 
 ---
 class: center, middle
@@ -928,7 +814,7 @@ Multitenancy is a reference to the mode of operation of software where multiple 
 ### Approaches
 
 - [Helm](https://helm.sh/)
-- Kubernetes Operators
+- Kubernetes [Operators](https://coreos.com/operators/)
 
 ---
 class: center, middle
@@ -952,6 +838,11 @@ class: center, middle
 - Using [`kops`](https://kubernetes.io/docs/setup/production-environment/tools/kops/)
 
 - Or managed kubernetes...
+
+---
+class: center, middle
+
+#### Demo: Setting up a cluster the hard-way on GCP
 
 ---
 class: center, middle
