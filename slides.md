@@ -715,7 +715,7 @@ Note: for simplicity, the secret and deployment are together. Don’t do this in
 
 class: center, middle
 
-## Storage
+## [Storage](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/notes/storage.md)
 
 ---
 class: center, middle
@@ -923,25 +923,25 @@ class: center, middle
 ---
 class: center, middle
 
-###### Demo: Ingress Controller
+##### Demo: Ingress Controller
 
 - Let's deploy [`nginx-ingress` controller](https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/), using `helm`
 
 ---
 class: center, middle
 
-###### Demo: Ingress
+##### Demo: Ingress
 
 - Review an existing [ingress resource](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/ingress.yaml)
 
 ---
 class: center, middle
 
-###### Exercise: Write an ingress spec for `spring-greeting`
+##### Exercise: Write an ingress spec for `spring-greeting`
 
 ---
 
-###### Using [multiple Ingress controllers](https://github.com/kubernetes/ingress-gce/blob/master/docs/faq/README.md#how-do-i-run-multiple-ingress-controllers-in-the-same-cluster)
+##### Using [multiple Ingress controllers](https://github.com/kubernetes/ingress-gce/blob/master/docs/faq/README.md#how-do-i-run-multiple-ingress-controllers-in-the-same-cluster)
 
 You may deploy any number of ingress controllers within a cluster. When you create an ingress, you should annotate each ingress with the appropriate ingress.class to indicate which ingress controller should be used if more than one exists within your cluster.
 
@@ -1036,7 +1036,7 @@ If a Container does not provide a liveness, readiness or startup probe, the resp
 
 ---
 
-#### Exercise A: Probes
+##### Exercise A: Probes
 
 In this exercise, a nginx container starts, but after 30 seconds the index.html file is removed, which causes nginx to no longer return a 200 status code. The probe will pick up on that and restart the container, starting the process over.
 
@@ -1050,7 +1050,7 @@ In this exercise, a nginx container starts, but after 30 seconds the index.html 
 
 ---
 
-#### Exercise B: Probes
+##### Exercise B: Probes
 
 Now let’s add a readiness probe so that traffic doesn’t get sent to a down pod. This lab includes the same pod from the last lab, but as a deployment with several copies. It has an initContainer that randomly sleeps before starting the main pod.
 
