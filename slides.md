@@ -868,6 +868,86 @@ class: center, middle
 ### Services, Load balancing & Networking
 
 ---
+class: center, middle
+
+#### Endpoints
+
+*Endpoints track the IP addresses of Pods with matching selectors.*
+
+---
+
+#### Services without selectors
+
+Services most commonly abstract access to Kubernetes Pods, but they can also abstract other kinds of backends. For example:
+
+- You want to have an external database cluster in production, but in your test environment you use your own databases.
+
+- You want to point your Service to a Service in a different Namespace or on another cluster.
+
+- You are migrating a workload to Kubernetes. Whilst evaluating the approach, you run only a proportion of your backends in Kubernetes.
+
+.content-credits[https://kubernetes.io/docs/concepts/services-networking/service/]
+
+---
+class: center, middle
+
+##### Demo: Exposing an externally running service within the cluster
+
+---
+class: center, middle
+
+#### [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress)
+
+*An API object that manages external access to the services in a cluster, typically HTTP.*
+
+---
+
+- Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
+
+- An Ingress may be configured to give Services externally-reachable URLs, load balance traffic, terminate SSL / TLS, and offer name based virtual hosting. An Ingress controller is responsible for fulfilling the Ingress, usually with a load balancer, though it may also configure your edge router or additional frontends to help handle the traffic.
+
+- An Ingress does not expose arbitrary ports or protocols. Exposing services other than HTTP and HTTPS to the internet typically uses a service of type `Service.Type=NodePort` or `Service.Type=LoadBalancer`.
+
+.content-credits[https://kubernetes.io/docs/concepts/services-networking/ingress/]
+
+---
+
+##### Prerequisites
+
+- You must have an ingress controller to satisfy an Ingress. Only creating an Ingress resource has no effect.
+
+- You may need to deploy an Ingress controller such as ingress-nginx. You can choose from a number of [Ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/).
+
+- Ideally, all Ingress controllers should fit the reference specification. In reality, the various Ingress controllers operate slightly differently.
+
+---
+class: center, middle
+
+###### Demo: Ingress Controller
+
+- Let's deploy [`nginx-ingress` controller](https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/), using `helm`
+
+---
+class: center, middle
+
+###### Demo: Ingress
+
+- Review an existing [ingress resource](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/ingress.yaml)
+
+---
+class: center, middle
+
+###### Exercise: Write an ingress spec for `spring-greeting`
+
+---
+
+###### Using [multiple Ingress controllers](https://github.com/kubernetes/ingress-gce/blob/master/docs/faq/README.md#how-do-i-run-multiple-ingress-controllers-in-the-same-cluster)
+
+You may deploy any number of ingress controllers within a cluster. When you create an ingress, you should annotate each ingress with the appropriate ingress.class to indicate which ingress controller should be used if more than one exists within your cluster.
+
+If you do not define a class, your cloud provider may use a default ingress controller.
+
+---
 
 class: center, middle
 

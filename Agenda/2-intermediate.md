@@ -26,7 +26,7 @@
 ### Services, Load balancing & Networking
 
 - Services in depth
-  - Topology
+  - Endpoints
 - DNS
   - Revisiting the architecture
 - Ingress
