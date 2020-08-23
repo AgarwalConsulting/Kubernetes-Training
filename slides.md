@@ -908,6 +908,13 @@ class: center, middle
 
 - An Ingress does not expose arbitrary ports or protocols. Exposing services other than HTTP and HTTPS to the internet typically uses a service of type `Service.Type=NodePort` or `Service.Type=LoadBalancer`.
 
+- Popular use is to centralize many microservices under one name using routing rules (AKA edge service or API gateway). For example:
+
+  `example.com/account` - points to account service
+  `example.com/orders` - points to order service
+
+- Other solutions exist for this. For example, cloud providers have their own L7 load balancers such as Application Load Balancer from AWS. Ingress is just the K8S solution. You can also do it internally with your own app like we will do in the hackathon portion.
+
 .content-credits[https://kubernetes.io/docs/concepts/services-networking/ingress/]
 
 ---
@@ -1063,6 +1070,170 @@ Now let’s add a readiness probe so that traffic doesn’t get sent to a down p
 - Run a watch `kubectl get all`, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
 - In a new terminal tab, run a watch `kubectl describe service nginx-service`. Notice the endpoints shifting as the service shuffles pods in and out of service based on their readiness probe status.
 - You should now have a resilient service that stays up. It might occasionally go down if all three pods are broken at the same time. But you get the idea.
+
+---
+class: center, middle
+
+#### [Scheduling](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/notes/workloads/scheduling.md)
+
+*In Kubernetes, scheduling refers to making sure that Pods are matched to Nodes so that `kubelet` can run them.*
+
+---
+
+##### Scheduling problem
+
+- In our cluster, we want to treat our nodes as generic commodities of compute power. But in reality, not all compute is equal. Different attributes of a server make it more suitable for some workloads.
+
+  - An application may need a GPU, or fast SSDs, or high network bandwidth, or high memory.
+  - We may want pods to run on cloud servers or on-premise servers.
+  - You may want pods that need to run physically close to each other (in the same availability zone) to minimize data traffic.
+
+- We need a way to tell our cluster which nodes are acceptable for which pods.
+
+---
+
+- `kube-scheduler` is the default scheduler for Kubernetes and runs as part of the control plane. `kube-scheduler` is designed so that, if you want and need to, you can write your own scheduling component and use that instead.
+
+- A scheduler watches for newly created Pods that have no Node assigned. For every Pod that the scheduler discovers, the scheduler becomes responsible for finding the best Node for that Pod to run on.
+
+- In a cluster, Nodes that meet the scheduling requirements for a Pod are called feasible nodes. If none of the nodes are suitable, the pod remains unscheduled until the scheduler is able to place it.
+
+- kube-scheduler selects a node for the pod in a 2-step operation:
+
+  - Filtering
+  - Scoring
+
+---
+
+##### Assigning Pods to Nodes
+
+- You can constrain a Pod to only be able to run on particular Node(s), or to prefer to run on particular nodes. There are several ways to do this, and the recommended approaches all use label selectors to make the selection.
+
+- Just like pods, nodes can have labels too.
+
+- Add a label to a node
+
+  `kubectl label nodes <node-name> <label-key>=<label-value>`
+
+- Remove a label
+
+  `kubectl label nodes <node-name> <label-key>=<label-value>-`
+
+- `nodeSelector` is the simplest recommended form of node selection constraint. nodeSelector is a field of PodSpec. It specifies a map of key-value pairs.
+
+---
+
+##### Exercise: `nodeSelector`
+
+- File: [examples/specs/nodeselector.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/nodeselector.yaml)
+- Review the file and apply it to your cluster.
+- Look at the state of your cluster. Did the pod schedule onto your node? Go find the exact cause.
+- Now apply the necessary label to your node to make the pod schedule.
+- Review the details to verify that it schedules successfully.
+
+---
+
+##### Node affinity/anti-affinity
+
+- `nodeSelector` provides a very simple way to constrain pods to nodes with particular labels. The affinity/anti-affinity feature, greatly expands the types of constraints you can express. The key enhancements are
+
+- Node `affinity` is conceptually similar to `nodeSelector` -- it allows you to constrain which nodes your pod is eligible to be scheduled on, based on labels on the node.
+
+- Affinity properties are specified in the pod spec separately from the nodeSelector.
+
+---
+
+- There are currently two types of node affinity, called `requiredDuringSchedulingIgnoredDuringExecution` and `preferredDuringSchedulingIgnoredDuringExecution`.
+
+- You can think of them as "hard" and "soft" respectively, in the sense that the former specifies rules that must be met for a pod to be scheduled onto a node (just like nodeSelector but using a more expressive syntax), while the latter specifies preferences that the scheduler will try to enforce but will not guarantee.
+
+- Thus an example of `requiredDuringSchedulingIgnoredDuringExecution` would be "only run the pod on nodes with Intel CPUs" and an example `preferredDuringSchedulingIgnoredDuringExecution` would be "try to run this set of pods in failure zone XYZ, but if it's not possible, then allow some to run elsewhere".
+
+- Node affinity is specified as field `nodeAffinity` of field `affinity` in the PodSpec.
+
+- The new node affinity syntax supports the following operators: `In`, `NotIn`, `Exists`, `DoesNotExist`, `Gt`, `Lt`.
+
+---
+
+##### Exercise: Node affinity lab
+
+- File: [examples/specs/affinity.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/affinity.yaml)
+- Remove the label created in the last lab with:
+  `kubectl label node docker-desktop storagetype-`
+- Predict the behavior when you apply the file. Apply it.
+- Apply the necessary label to make the pod schedule.
+- Note that there was a preferred requirement for storagetype but the pod still gets scheduled if it isn’t present.
+
+---
+
+##### Inter-pod affinity and anti-affinity
+
+Inter-pod affinity and anti-affinity allow you to constrain which nodes your pod is eligible to be scheduled based on labels on pods that are already running on the node rather than based on labels on nodes.
+
+- The rules are of the form "this pod should (or, in the case of anti-affinity, should not) run in an X if that X is already running one or more pods that meet rule Y".
+
+- Y is expressed as a `LabelSelector` with an optional associated list of namespaces; unlike nodes, because pods are namespaced (and therefore the labels on pods are implicitly namespaced), a label selector over pod labels must specify which namespaces the selector should apply to.
+
+- Inter-pod affinity is specified as field `podAffinity` of field `affinity` in the PodSpec. And inter-pod `anti-affinity` is specified as field `podAntiAffinity` of field `affinity` in the PodSpec.
+
+---
+
+##### Exercise: Inter-pod affinity
+
+- File: [examples/specs/inter-pod-affinity.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/inter-pod-affinity.yaml)
+- Review the file and apply it to your cluster.
+- Look at the state of your cluster. Did the pod schedule onto your node? Go find the exact cause.
+- Now create other pods with appropriate labels to schedule the pods.
+- Review the details to verify that it schedules successfully.
+
+---
+class: center, middle
+
+##### Taints and Tolerations
+
+---
+
+##### Taints
+
+- Node affinity, is a property of Pods that attracts them to a set of nodes. Taints are the opposite -- they allow a node to repel a set of pods.
+
+- You add a taint to a node using `kubectl taint`. For example,
+
+  `kubectl taint nodes <node-name> key=value:NoSchedule`
+
+- To remove the taint added by the command above, you can run:
+
+  `kubectl taint nodes <node-name> key:NoSchedule-`
+
+---
+
+##### Tolerations
+
+- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+
+- Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. One or more taints are applied to a node; this marks that the node should not accept any pods that do not tolerate the taints.
+
+- You specify a toleration for a pod in the PodSpec using `tolerations`.
+
+- The default value for operator is `Equal`.
+
+- A toleration "matches" a taint if the keys are the same and the effects are the same, and:
+
+  - the operator is `Exists` (in which case no value should be specified), or
+  - the operator is `Equal` and the values are equal.
+
+---
+
+##### Exercise: Taints & tolerations
+
+- File: [examples/specs/taints.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/taints.yaml)
+- Give your node a taint to allow the first pod to schedule on your node but prevent the second pod from scheduling on the node.
+- Describe your node and verify that the taint is in place.
+- Apply the file to your cluster.
+- Review the pod. You should find that the second pod didn’t schedule. However, the first pod should schedule.
+- Now add a taint to evict the first pod. It should be removed after 30 seconds.
+- Now remove the taints. The second generic pod should now schedule.
+- When done delete the resources.
 
 ---
 class: center, middle
