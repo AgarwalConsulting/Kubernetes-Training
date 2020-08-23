@@ -14,13 +14,18 @@ Gaurav Agarwal
 
 ---
 
-# Agenda
+# [Agenda](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/Agenda)
 
 - Understanding the Kubernetes architecture
-- Managing & setting up production grade infrastructure
+
 - Understanding built-in Workloads
   - Pods
   - Controllers
+  - Storage
+  - Networking
+  - ...
+
+- Managing & setting up production grade infrastructure
 
 ---
 
@@ -54,12 +59,13 @@ class: center, middle
   - Storage
   - GPU
   - ...
-- Networking
+- Fault Tolerance
+  - Healing & resiliency
 - Isolation
-- Deployment
+- Networking
+  - Service Discovery
+- Managing Deployment
 - Auto-Scaling
-- Healing & resiliency
-- Service Discovery
 - ...
 
 ---
@@ -105,66 +111,36 @@ class: center, middle
 ---
 class: center, middle
 
-## Control Plane Components
+## Components
+
+---
+
+- Control Plane
+
+- Worker Plane / Nodes
+
+- Addons
+
+---
+class: center, middle
+
+### Control Plane Components
 
 Control plane components can be run on any machine in the cluster. However, for simplicity, set up scripts typically start all control plane components on the same machine, and do not run user containers on this machine.
 
 ---
-
-- **etcd**: is a persistent, lightweight, distributed, key-value data store developed by CoreOS that reliably stores the configuration data of the cluster, representing the overall state of the cluster at any given point of time.
-
-  > etcd uses [Raft Consensus](https://raft.github.io/) to share state and elect leader in a cluster.
-
-- **kube-apiserver**: The API server is a key component and serves the Kubernetes API using JSON over HTTP, which provides both the internal and external interface to Kubernetes.
-
-- **kube-scheduler**: The scheduler is the pluggable component that selects which node an unscheduled pod (the basic entity managed by the scheduler) runs on, based on resource availability. The scheduler tracks resource use on each node to ensure that workload is not scheduled in excess of available resources.
-
-- **kube-controller-manager**: Control Plane component that runs controller processes.
-
-  > A controller is a reconciliation loop that drives actual cluster state toward the desired cluster state, communicating with the API server to create, update, and delete the resources it manages (nodes, pods, service endpoints, etc).
-
----
-
-## Optional control plane components
-
-- **cloud-controller-manager**: A Kubernetes control plane component that embeds cloud-specific control logic. The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster.
-  > The cloud-controller-manager only runs controllers that are specific to your cloud provider. If you are running Kubernetes on your own premises, or in a learning environment inside your own PC, the cluster does not have a cloud controller manager.
-
----
 class: center, middle
 
-## Node Components (Worker Plane)
+### Worker Plane components - Nodes
 
 Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
 
 ---
-
-- **kubelet**: An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod; responsible for communication between the Kubernetes Master and the Node.
-
-- **kube-proxy**: kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
-
-- *Container runtime*: The container runtime is the software that is responsible for running containers.
-
-  > Kubernetes supports several container runtimes: Docker, containerd, CRI-O, and any implementation of the Kubernetes CRI (Container Runtime Interface).
-
----
 class: center, middle
 
-## Addons
+### Addons
 
 Addons use Kubernetes resources (DaemonSet, Deployment, etc) to implement cluster features.
-
----
-
-- DNS (**CoreDNS**): For Service Discovery, CoreDNS is a flexible, extensible DNS server which can be installed as the in-cluster DNS for pods.
-
-- Web UI (**Dashboard**): Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage and troubleshoot applications running in the cluster, as well as the cluster itself.
-
-- Container Resource Monitoring (**Prometheus**): Container Resource Monitoring records generic time-series metrics about containers in a central database, and provides a UI for browsing that data.
-
-- Cluster-level logging: Logs should have a separate storage and lifecycle independent of nodes, pods, or containers. Otherwise, node or pod failures can cause loss of event data. The ability to do this is called cluster-level logging, and such mechanisms are responsible for saving container logs to a central log store with search/browsing interface. Kubernetes provides no native storage for log data, but one can integrate many existing logging solutions into the Kubernetes cluster.
-
-- [Others](https://kubernetes.io/docs/concepts/cluster-administration/addons/)
 
 ---
 class: center, middle
@@ -179,36 +155,24 @@ class: center, middle
 
   *In fact, you can use `kubeadm` to set up a cluster that will pass the [Kubernetes Conformance tests](https://kubernetes.io/blog/2017/10/software-conformance-certification/).*
 
-### `kubeadm` is
-
 - A simple way for you to try out Kubernetes, possibly for the first time.
+
 - A way for existing users to automate setting up a cluster and test their application.
+
 - A building block in other ecosystem and/or installer tools with a larger scope.
 
 .content-credits[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/]
 
 ---
 
-### Optional: [Provisioning a K8s cluster](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/examples/provisioning)
-
-- Using [`kubeadm`](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
-  - [HA Cluster](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/)
-- [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) by Kelsey Hightower
-- Using [`kops`](https://kubernetes.io/docs/setup/production-environment/tools/kops/)
-- Or managed kubernetes...
-
----
-class: center, middle
-
-#### Exercise: Setting a multi-node cluster [on Katacoda](https://www.katacoda.com/courses/kubernetes/getting-started-with-kubeadm)
-
----
-
 ## `kubectl`
 
 - The `kubectl` command line tool lets you control Kubernetes clusters.
+
 - For configuration, kubectl looks for a file named `config` in the `$HOME/.kube` directory.
+
 - You can specify other kubeconfig files by setting the `KUBECONFIG` environment variable or by setting the `--kubeconfig` flag.
+
 - Makes it reasonably easy to work with multiple clusters using: `kubectl config` & `contexts`
 
 .content-credits[https://kubernetes.io/docs/reference/kubectl/overview/]
@@ -221,22 +185,27 @@ So, let's get on with it...
 ---
 class: center, middle
 
-# Learning more about a cluster
+# Basics
 
 ---
 class: center, middle
 
-## Nodes
+## Cluster Computing
 
 ---
+class: center, middle
 
-### Overview
+### Nodes
+
+`Node = machine`
+
+---
 
 - Kubernetes runs your workload by placing containers into Pods to run on Nodes.
 - A node may be a virtual or physical machine, depending on the cluster.
 - Each node contains the services necessary to run Pods, managed by the control plane.
 
-### Useful commands
+#### Useful commands
 
 - `kubectl get nodes`
 - `-o wide` for more information
@@ -245,45 +214,7 @@ class: center, middle
 ---
 class: center, middle
 
-## Namespaces
-
----
-
-- Kubernetes supports multiple virtual clusters backed by the same physical cluster.
-
-  *These virtual clusters are called namespaces.*
-
-- Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
-- Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces.
-- Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
-- Namespaces are a way to [divide cluster resources between](https://kubernetes.io/docs/concepts/policy/resource-quotas/) multiple users.
-
-.content-credits[https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/]
-
----
-
-Kubernetes starts with four initial namespaces:
-
-- `default`: The default namespace for objects with no other namespace
-- `kube-system`: The namespace for objects created by the Kubernetes system
-- `kube-public`: This namespace is created automatically and is readable by all users (including those not authenticated). This namespace is mostly reserved for cluster usage, in case that some resources should be visible and readable publicly throughout the whole cluster. The public aspect of this namespace is only a convention, not a requirement.
-- `kube-node-lease`: This namespace for the lease objects associated with each node which improves the performance of the node heartbeats as the cluster scales.
-
-.content-credits[https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/]
-
----
-
-## Useful `kubectl` commands
-
-- `kubectl get <resource-type> {<name>}`
-- `kubectl describe <resource-type> {<name>}`
-- `kubectl create <resource-type> {<name>}`
-- `kubectl delete <resource-type> {<name>}`
-
----
-class: center, middle
-
-# Running our first container inside Kubernetes
+### Running our first container on a Kubernetes cluster
 
 ---
 class: center, middle
@@ -293,12 +224,12 @@ class: center, middle
 ---
 class: center, middle
 
-# Workloads
+## Workloads
 
 ---
 class: center, middle
 
-## Pods
+### Pods
 
 ---
 
@@ -940,6 +871,92 @@ class: center, middle
 - Review the file and apply to your cluster
 - Review the pods in the cluster, look at output, etc.
 - Delete when done
+
+---
+class: center, middle
+
+# Intermediate
+
+---
+class: center, middle
+
+## Isolation
+
+---
+class: center, middle
+
+### Namespaces
+
+---
+
+- Kubernetes supports multiple virtual clusters backed by the same physical cluster.
+
+  *These virtual clusters are called namespaces.*
+
+- Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
+- Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces.
+- Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+- Namespaces are a way to [divide cluster resources between](https://kubernetes.io/docs/concepts/policy/resource-quotas/) multiple users.
+
+.content-credits[https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/]
+
+---
+
+Kubernetes starts with four initial namespaces:
+
+- `default`: The default namespace for objects with no other namespace
+- `kube-system`: The namespace for objects created by the Kubernetes system
+- `kube-public`: This namespace is created automatically and is readable by all users (including those not authenticated). This namespace is mostly reserved for cluster usage, in case that some resources should be visible and readable publicly throughout the whole cluster. The public aspect of this namespace is only a convention, not a requirement.
+- `kube-node-lease`: This namespace for the lease objects associated with each node which improves the performance of the node heartbeats as the cluster scales.
+
+.content-credits[https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/]
+
+---
+class: center, middle
+
+## Reusable apps & Multitenancy
+
+---
+class: center, middle
+
+### Multitenancy
+
+Multitenancy is a reference to the mode of operation of software where multiple independent instances of one or multiple applications operate in a shared environment.
+
+---
+
+### Approaches
+
+- [Helm](https://helm.sh/)
+- Kubernetes Operators
+
+---
+class: center, middle
+
+#### [Helm](https://helm.slides.algogrit.com/)
+
+---
+class: center, middle
+
+## [Provisioning a K8s cluster](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/notes/provisioning.md)
+
+---
+
+### Options
+
+- Using [`kubeadm`](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+  - [HA Cluster](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/)
+
+- [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) by Kelsey Hightower
+
+- Using [`kops`](https://kubernetes.io/docs/setup/production-environment/tools/kops/)
+
+- Or managed kubernetes...
+
+---
+class: center, middle
+
+#### Exercise: Setting a multi-node cluster [on Katacoda](https://www.katacoda.com/courses/kubernetes/getting-started-with-kubeadm)
 
 ---
 class: center, middle
