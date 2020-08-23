@@ -925,14 +925,14 @@ class: center, middle
 
 ##### Demo: Ingress Controller
 
-- Let's deploy [`nginx-ingress` controller](https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/), using `helm`
+Let's deploy [`nginx-ingress` controller](https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/), using `helm`
 
 ---
 class: center, middle
 
 ##### Demo: Ingress
 
-- Review an existing [ingress resource](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/ingress.yaml)
+Review an existing [ingress resource](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/ingress.yaml)
 
 ---
 class: center, middle
