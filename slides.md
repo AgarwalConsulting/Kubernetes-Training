@@ -254,12 +254,14 @@ class: center, middle
 ---
 class: center, middle
 
+#### Relation between Pods and containers
+
 ![Pods](assets/images/pods/pods.png)
 
 ---
 class: center, middle
 
-#### Nodes and Pods
+#### Relation between Nodes and Pods
 
 ![Nodes and Pods](assets/images/pods/nodes-ands-pods.png)
 
