@@ -5,6 +5,7 @@
 - Informers
 - Custom Resource Definitions
 - Controllers
+- [Scheduling Framework](https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/)
 
 ## Writing a K8s operator
 
