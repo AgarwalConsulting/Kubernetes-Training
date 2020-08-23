@@ -360,7 +360,7 @@ ServiceTypes control the way in which a service is exposed.
 ---
 class: center, middle
 
-#### Exercise
+#### Exercise: Pods & Services
 
 Write a [pod spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/pod.md) & [service spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/service.md) for the [greeting service](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/challenges/spring-greeting).
 
@@ -850,6 +850,133 @@ class: center, middle
 class: center, middle
 
 #### Exercise: Setting a multi-node cluster [on Katacoda](https://www.katacoda.com/courses/kubernetes/getting-started-with-kubeadm)
+
+---
+class: center, middle
+
+## Kubernetes concepts in depth
+
+---
+class: center, middle
+
+### Services, Load balancing & Networking
+
+---
+
+class: center, middle
+
+### Advanced Pods
+
+---
+
+class: center, middle
+
+#### Composite Pods
+
+---
+class: center, middle
+
+##### [Init Containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) & Sidecars
+
+*Pods in a Kubernetes cluster can be used in two main ways: Single container, multiple containers.*
+
+---
+
+##### Init containers overview
+
+- Init containers run and complete before the app containers are started.
+- Init containers always run to completion.
+- Each init container must complete successfully before the next one starts.
+- Application containers (or app containers) are the containers in a pod that are started after any init containers have completed.
+- Migrations are a good example of this. Eg: [Yaes Server](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/service.yaml#L19)
+
+##### Sidecar overview
+
+- Usually you want to have a pod contain just a single container.
+- However, there are cases when you’d want to have multiple containers in a single pod.
+- The sidecar pattern is an example of this.
+- With a sidecar, you run a second container in a pod whose job is to take action and support the primary container.
+- Logging is a good example, where a sidecar container sends logs from the primary container to a centralized logging system.
+
+---
+class: center, middle
+
+##### Demo: Init container - [migration](https://github.com/algogrit/yaes-server)
+
+---
+class: center, middle
+
+*For example, you might have a container that acts as a web server for files in a shared volume, and a separate "sidecar" container that updates those files from a remote source.*
+
+![Sidecar](assets/images/pods/sidecar.png)
+
+.image-credits[https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/]
+
+---
+
+##### Exercise: Sidecar
+
+- File: [examples/specs/logshipper.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/logshipper.yaml)
+- Let’s apply it
+- Review all pods
+- Describe the pod
+
+---
+class: center, middle
+
+#### Probes
+
+---
+
+- A Probe is a diagnostic performed periodically by the kubelet on a Container.
+
+- Pods and their containers can misbehave. We need to have a way to control how Kubernetes handles them.
+
+- When a pod becomes unhealthy, we want Kubernetes to be able to restart it.
+
+- Because pods and their containers don’t start up immediately, we want Kubernetes to hold traffic from hitting the pod until it is ready.
+
+---
+
+The kubelet can optionally perform and react to three kinds of probes on running Containers:
+
+- `livenessProbe`: Indicates whether the [Container is running](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-liveness-probe). If the liveness probe fails, the kubelet kills the Container, and the Container is subjected to its restart policy.
+
+- `readinessProbe`: Indicates whether the [Container is ready to service requests](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-readiness-probe). If the readiness probe fails, the endpoints controller removes the Pod's IP address from the endpoints of all Services that match the Pod. The default state of readiness before the initial delay is Failure.
+
+- `startupProbe`: Indicates whether the [application within the Container is started](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-startup-probe). All other probes are disabled if a startup probe is provided, until it succeeds. If the startup probe fails, the kubelet kills the Container, and the Container is subjected to its restart policy.
+
+If a Container does not provide a liveness, readiness or startup probe, the respective probes default state is Success. [Documentation on configuration here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
+---
+
+#### Exercise A: Probes
+
+In this exercise, a nginx container starts, but after 30 seconds the index.html file is removed, which causes nginx to no longer return a 200 status code. The probe will pick up on that and restart the container, starting the process over.
+
+- File: [examples/specs/probe.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/probe.yaml)
+- Review the template file. Notice there are two resources in this one!
+- Apply to your cluster.
+- Open a browser and verify that you can access it.
+- `kubectl get all`. Notice the pod’s restarts column.
+- `kubectl describe pod liveness-http`, and notice the output shows the restarts
+- When done, delete the resources using the template file. `kubectl delete –f probe.yaml`
+
+---
+
+#### Exercise B: Probes
+
+Now let’s add a readiness probe so that traffic doesn’t get sent to a down pod. This lab includes the same pod from the last lab, but as a deployment with several copies. It has an initContainer that randomly sleeps before starting the main pod.
+
+- File: [examples/specs/probe-2.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/probe-2.yaml)
+- Review the template file.
+- Apply to your cluster.
+- Open a browser and verify that you can access it.
+- After about a minute, you should no longer get a valid response from any pod, because they all get the index.html file removed.
+- Now update the deployment ([documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)) to contain both a readiness probe (to remove the pod from service when it goes down) and a liveness probe (to restart the container when it fails).
+- Run a watch `kubectl get all`, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
+- In a new terminal tab, run a watch `kubectl describe service nginx-service`. Notice the endpoints shifting as the service shuffles pods in and out of service based on their readiness probe status.
+- You should now have a resilient service that stays up. It might occasionally go down if all three pods are broken at the same time. But you get the idea.
 
 ---
 class: center, middle

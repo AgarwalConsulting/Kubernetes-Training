@@ -35,8 +35,8 @@
 
 #### Composite Pods
 
+- Init containers
 - Sidecar
-- Ambassador
 
 #### Probes
 
