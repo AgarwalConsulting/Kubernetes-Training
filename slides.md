@@ -1342,9 +1342,7 @@ Total memory limit: 192 Mi
 ---
 class: center, middle
 
-##### Example: ResourceQuota
-
-- File: [examples/specs/resources/resourcequota.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/resources/resourcequota.yaml)
+##### Example: [ResourceQuota](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/resources/resourcequota.yaml)
 
 ---
 
@@ -1363,9 +1361,7 @@ Unlike a quota, a LimitRange applies to any container rather than the total for 
 ---
 class: center, middle
 
-##### Example: LimitRange
-
-- File: [examples/specs/resources/limitrange.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/resources/limitrange.yaml)
+##### Example: [LimitRange](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/resources/limitrange.yaml)
 
 ---
 
