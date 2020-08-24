@@ -468,7 +468,7 @@ So what component in Kubernetes makes sure the specified number of replica pods 
 #### Exercise: ReplicaSet
 
 - File: [examples/specs/replicaset.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/replicaset.yaml)
-- You can optionally: write a replicaset.yaml file for `spring-greeting` service.
+- You can optionally: write a replicaset.yaml file for `spring-greeting` application.
 - Review the file. Note the labels and replicas. Does the spec section look familiar?
 - Apply the file to your cluster.
 - `kubectl get all`. Note that we now have pods, services, and replicasets
