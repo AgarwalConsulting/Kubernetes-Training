@@ -1434,6 +1434,8 @@ Since time immemorial *(or since http was invented)*, there are various ways of 
 
 *Both these methods are increasingly outdated.*
 
+.content-credits[https://stackoverflow.com/a/17769061/1268651]
+
 ---
 class: center, middle
 
