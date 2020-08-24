@@ -471,9 +471,9 @@ So what component in Kubernetes makes sure the specified number of replica pods 
 - You can optionally: write a replicaset.yaml file for `spring-greeting` service.
 - Review the file. Note the labels and replicas. Does the spec section look familiar?
 - Apply the file to your cluster.
-- Kubectl get all. Note that we now have pods, services, and replicasets
+- `kubectl get all`. Note that we now have pods, services, and replicasets
 - We now have our nginx pod running again! Try the URL to the service.
-- Now go delete your pod. Does the service go down? Does it go down temporarily? Do a kubectl get all and note the name of the new pod.
+- Now go delete your pod. Does the service go down? Does it go down temporarily? Do a `kubectl get all` and note the name of the new pod.
 - Now go increase the replicas setting in the template file and reapply.
 - Repeat the pod delete step, and note that you now have a resilient service that auto heals but also has multiple pods to serve requests!
 - When done, delete the replicaset.
@@ -534,8 +534,8 @@ class: center, middle
 
 - File: [examples/specs/deployment.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/deployment.yaml)
 - Review the file. Does it look just like a replicaset? Sure does! Note the image tag of 1.0.
-- Apply it to the cluster. Kubectl get all and note we now have pods, services, replicasets, and deployments. Your service should be back up at your cluster IP URL and will behave the same way as your replicaset did.
-- Now update the deployment file to upgrade nginx from 1.0 to 2.0. When you apply it, quickly kubectl get all, and notice how a new replicaset and pods are created. At the URL, if you keep refreshing, you’ll see version 1 change to version 2 without the service ever going down.
+- Apply it to the cluster. `kubectl get all` and note we now have pods, services, replicasets, and deployments. Your service should be back up at your cluster IP URL and will behave the same way as your replicaset did.
+- Now update the deployment file to upgrade nginx from 1.0 to 2.0. When you apply it, quickly `kubectl get all`, and notice how a new replicaset and pods are created. At the URL, if you keep refreshing, you’ll see version 1 change to version 2 without the service ever going down.
 
 ---
 
@@ -1048,7 +1048,7 @@ In this exercise, a nginx container starts, but after 30 seconds the index.html 
 - Review the template file. Notice there are two resources in this one!
 - Apply to your cluster.
 - Open a browser and verify that you can access it.
-- `kubectl get all`. Notice the pod’s restarts column.
+- ``kubectl get all``. Notice the pod’s restarts column.
 - `kubectl describe pod liveness-http`, and notice the output shows the restarts
 - When done, delete the resources using the template file. `kubectl delete –f probe.yaml`
 
@@ -1064,7 +1064,7 @@ Now let’s add a readiness probe so that traffic doesn’t get sent to a down p
 - Open a browser and verify that you can access it.
 - After about a minute, you should no longer get a valid response from any pod, because they all get the index.html file removed.
 - Now update the deployment ([documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)) to contain both a readiness probe (to remove the pod from service when it goes down) and a liveness probe (to restart the container when it fails).
-- Run a watch `kubectl get all`, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
+- Run a watch ``kubectl get all``, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
 - In a new terminal tab, run a watch `kubectl describe service nginx-service`. Notice the endpoints shifting as the service shuffles pods in and out of service based on their readiness probe status.
 - You should now have a resilient service that stays up. It might occasionally go down if all three pods are broken at the same time. But you get the idea.
 
