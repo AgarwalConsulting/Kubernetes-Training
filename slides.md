@@ -1377,6 +1377,76 @@ class: center, middle
 ---
 class: center, middle
 
+### Security
+
+---
+
+#### The 4C's of Cloud Native security
+
+![4C's](assets/images/security/4c.png)
+
+.image-credits[https://kubernetes.io/docs/concepts/security/overview/]
+
+---
+
+*You can think about security in layers.*
+
+The 4C's of Cloud Native security are:
+
+- Cloud
+- Clusters
+- Containers
+- Code
+
+---
+
+##### Cloud / Infrastructure layer
+
+In many ways, the Cloud (or co-located servers, or the corporate datacenter) is the trusted computing base of a Kubernetes cluster.
+
+If the Cloud layer is vulnerable then there is no guarantee that the components built on top of this base are secure. Each cloud provider makes security recommendations for running workloads securely in their environment.
+
+##### Containers
+
+Here are general recommendations and links to explore this topic:
+
+- Container Vulnerability Scanning and OS Dependency Security
+- Image Signing and Enforcement
+- Disallow privileged users
+
+*Container & cloud security is outside the scope of this training.*
+
+---
+
+##### Code
+
+Since time immemorial *(or since http was invented)*, there are various ways of authenticating any incoming request to a server:
+
+- Basic Auth
+
+  With [basic auth](https://github.com/AgarwalConsulting/Go-Training/tree/master/examples/11-A-01-net/auth/basic) you have credentials sent over http headers, verfied server side.
+
+- Cookies
+
+  A cookie is basically just an item in a dictionary. Each item has a key and a value. For authentication, the key could be something like 'username' and the value would be the username. Each time you make a request to a website, your browser will include the cookies in the request, and the host server will check the cookies. So authentication can be done automatically like that.
+
+  A browser will save the cookies set by the server. In the HTTP header of every request the browser makes to that server, it will add the cookies.
+
+*Both these methods are increasingly outdated.*
+
+---
+class: center, middle
+
+###### [JWT](https://jwt.io/)
+
+---
+class: center, middle
+
+###### Demo: JWT API in [Go](https://github.com/AgarwalConsulting/Go-Training/tree/master/examples/11-A-01-net/auth/jwt)
+
+---
+class: center, middle
+
 # Hackathon: [RVStore](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/rvstore)
 
 ---
