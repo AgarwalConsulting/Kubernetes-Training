@@ -12,7 +12,7 @@ A [simple api](https://github.com/AgarwalConsulting/DockerTraining/tree/master/e
 
 The app is packaged as a docker image at [agarwalconsulting/spring-greeting](https://hub.docker.com/repository/docker/agarwalconsulting/spring-greeting).
 
-### Goals
+### Goals/Questions
 
 - Write a pod spec
 - Write a service spec

@@ -347,22 +347,19 @@ class: center, middle
 ServiceTypes control the way in which a service is exposed.
 
 ---
-
-#### Exercise: Service
-
-- File: [examples/specs/service.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/service.yaml)
-- Review the file. Pay attention to the type and ports.
-- Apply to cluster
-- Can we access the service from our own computer at http://localhost:30080?
-- Now go delete your pod and try the URL again. Oh no! Our service is down!
-- Don’t delete the service. We’ll use it again shortly.
-
----
 class: center, middle
 
 #### Exercise: Pods & Services
 
 Write a [pod spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/pod.md) & [service spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/service.md) for the [greeting service](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/challenges/spring-greeting).
+
+---
+
+#### Exercise: Service continued
+
+- Can we access the service from our own computer at http://localhost:<node-port>?
+- Now go delete your pod and try the URL again. Oh no! Our service is down!
+- Don’t delete the service. We’ll use it again shortly.
 
 ---
 class: center, middle
