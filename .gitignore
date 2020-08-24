@@ -110,3 +110,4 @@ terraform.tfvars
 
 var/
 manifest.yaml
+manifest.json
