@@ -1447,6 +1447,28 @@ class: center, middle
 ###### Demo: JWT API in [Go](https://github.com/AgarwalConsulting/Go-Training/tree/master/examples/11-A-01-net/auth/jwt)
 
 ---
+
+#### Cluster Security
+
+There are two areas of concern for securing Kubernetes:
+
+- Securing the cluster components that are configurable
+- Securing the applications which run in the cluster
+
+---
+
+##### Components of the Cluster
+
+If you want to protect your cluster from accidental or malicious access and adopt good information practices, read and follow the advice about [securing your cluster](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/).
+
+*We would be covering this in detail in a more advanced class when we would be [setting up a K8s cluster](https://kubernetes.io/docs/concepts/cluster-administration/) the hard way.*
+
+---
+class: center, middle
+
+##### [Components in the cluster](https://kubernetes.io/docs/concepts/security/overview/#cluster-applications)
+
+---
 class: center, middle
 
 # Hackathon: [RVStore](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/rvstore)
