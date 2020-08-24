@@ -357,7 +357,7 @@ Write a [pod spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree
 
 #### Exercise: Service continued
 
-- Can we access the service from our own computer at http://localhost:<node-port>?
+- Can we access the service from our own computer at `http://localhost:<node-port>`?
 - Now go delete your pod and try the URL again. Oh no! Our service is down!
 - Don’t delete the service. We’ll use it again shortly.
 
