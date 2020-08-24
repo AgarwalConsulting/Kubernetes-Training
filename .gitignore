@@ -109,3 +109,4 @@ terraform.tfvars
 .env
 
 var/
+manifest.yaml
