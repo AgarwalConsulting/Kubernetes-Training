@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: fibonacci-replica
+  labels:
+    app: fibonacci
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fibonacci
+  template:
+    metadata:
+      labels:
+        app: fibonacci
+    spec:
+      containers:
+      - name: fibonacci
+        image: agarwalconsulting/fib-gen
+        resources:
+          requests:
+            cpu: 100m
+            memory: 20Mi
+          limits:
+            cpu: 500m
+            memory: 100Mi
+        env:
+          - name: DURATION
+            value: "3"
