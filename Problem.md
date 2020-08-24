@@ -1,5 +1,7 @@
 # Problem
 
+## Search Engine
+
 I run a search engine, with multiple microservices (10000 req/s):
 
 - Text Search service
@@ -23,3 +25,14 @@ I have added 100 nodes to scale the system up to (1M req/s), but:
 - Minimize the number of nodes required
   - Not all services experience load at the same time
 - Scale to (10M req/s), and beyond dynamically
+
+---
+
+## eCommerce Application μ-services
+
+- Inventory/Products Service
+- Order Service
+- Payment Service
+- User Service
+- Gateway Service
+- UI Service
