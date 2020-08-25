@@ -51,7 +51,7 @@ Then you must:
 
 #### From the CSR, let’s create a new certificate. On a remote cluster, you’d do this from the cluster. For this lab, we’re doing it on our workstation
 
-- Get the certificate authority certificate and key from your cluster. This is if you’re running Kubernetes for Docker Desktop.
+- Get the certificate authority certificate and key from your cluster. This is if you’re running Kubernetes using `kind`.
 
   `kubectl cp kube-apiserver-kind-control-plane:etc/kubernetes/pki/ca.crt -n kube-system ~/k8s/certs/ca.crt`
 
@@ -72,7 +72,8 @@ Then you must:
 `kubectl config set-credentials testuser@local --client-certificate=$HOME/k8s/certs/testuser.crt --client-key=$HOME/k8s/certs/testuser.key --embed-certs=true`
 
 - Set a context which will match up the cluster and your new credential
-`kubectl config set-context testuser@local --cluster=docker-desktop --user=testuser@local`
+
+`kubectl config set-context testuser@local --cluster=kind-kind --user=testuser@local`
 
 - Set kubectl to use this new context
 
