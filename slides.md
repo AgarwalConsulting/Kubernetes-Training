@@ -1487,6 +1487,94 @@ class: center, middle
 ##### [Components in the cluster](https://kubernetes.io/docs/concepts/security/overview/#cluster-applications)
 
 ---
+
+##### Problem
+
+Working with Kubernetes as an administrator is easy. But in production, we need to:
+
+- Have different users with different privileges
+- Have full, granular control over what privileges those users have
+- Have full, granular control over processes in our cluster
+- Limit visibility to some users
+
+---
+class: center, middle
+
+###### RBAC
+
+---
+
+- We have a few key concepts:
+
+  - Subjects – users and processes that want to access Kubernetes
+  - API resources – Kubernetes objects like pods, services, etc.
+  - Verbs – The set of operations that can be executed on the resources.
+
+- `RBAC` is all about controlling what users and processes (subjects) can perform operations (verbs) on specific resources.
+
+- `RBAC` objects:
+
+  - `Roles` – Will connect API resources and verbs. These are reusable.
+  - `RoleBindings` – Will connect Roles to subjects
+
+---
+class: center, middle
+
+###### Demo: [Creating a user](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/notes/rbac.md)
+
+---
+
+###### roles
+
+- With just a user, you can’t do anything. Users are given no permissions by default.
+
+- We need a role applied to the user to allow this user to actually do something.
+
+- A role is where we specify what operation can be done against what resource. A role does NOT specify WHO.
+
+- Roles are scoped to a namespace. To give permission to resources at the cluster level (like nodes), there is a ClusterRole object, which closely resembles a Role.
+
+---
+
+###### Exercise: `roles`
+
+Let’s create a role that will give testuser access to limited functionality.
+
+- File: [examples/rbac/devrole.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/rbac/devrole.yaml)
+- Inspect the file and notice what resources and verbs it allows.
+
+  - What resources will this role allow access to?
+  - What actions will the subject (user) be able to perform on those resources?
+
+- Apply the file to the cluster
+- At this point we still don’t have access for testuser. For that we need a RoleBinding.
+
+---
+
+###### `rolebindings`
+
+- RoleBindings tie a subject (user) to a role.
+- There is also ClusterRoleBinding which is used to grant permissions at the cluster level.
+
+---
+
+###### Exercise: `rolebindings`
+
+Let’s tie the Role we created in the last lab to our testuser.
+
+- File: [examples/rbac/devrolebinding.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/rbac/devrolebinding.yaml)
+- Inspect the file.
+- Apply the file to the cluster
+- With this in place, we can now access the cluster with our testuser.
+- To test the user, switch your kubectl context over to testuser and attempt to do some operations. Perhaps apply one of the pods in the exercise files. You should only be allowed to do the operations allowed in the Role that was created in the last lab.
+- Try modifying the role and see how it impacts testuser.
+
+---
+class: center, middle
+
+## SRE / [Observability](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/notes/observability.md)
+
+---
 class: center, middle
 
 # Hackathon: [RVStore](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/rvstore)
