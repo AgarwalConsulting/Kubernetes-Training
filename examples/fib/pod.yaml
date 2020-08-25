@@ -15,4 +15,12 @@ spec:
         memory: 100Mi
     env:
       - name: DURATION
-        value: "2"
+        value: "3"
+
+        # valueFrom:
+        #   secretKeyRef:
+        #     name: fib-secret
+        #     key: duration
+        #   configMapKeyRef:
+        #     name: fib-config
+        #     key: duration

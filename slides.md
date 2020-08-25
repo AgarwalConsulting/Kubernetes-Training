@@ -686,18 +686,6 @@ class: center, middle
 
 ---
 
-#### Exercise: `Configmap`
-
-- File: [examples/specs/configmap.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/configmap.yaml)
-- Review the file and apply to your cluster
-- Take a look at the log output for the MongoDB pod
-- Also describe the MongoDB pod and notice the output references the configmap
-- When done, delete the resources
-- Port forward: `kubectl port-forward pod/mongodb-deployment-xxx 27017:27017`
-- Connection string: `mongodb://<username>:<password>@localhost/admin`
-
----
-
 #### `secrets`
 
 - How do you store sensitive information? Should you include it in a Docker image? How about in a pod spec? Never!
@@ -711,6 +699,18 @@ class: center, middle
 - Note that secrets are still accessible to those with access directly to the cluster. They are meant to protect from including them in Docker images which are more portable. It is best to have secrets managed by a limited set of people who know how to keep them safe. And don’t just check them into source control alongside your resources.
 
 - When secrets are updated, the containers automatically pick up the changes immediately.
+
+---
+
+#### Exercise: `Configmap`
+
+- File: [examples/specs/configmap.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/configmap.yaml)
+- Review the file and apply to your cluster
+- Take a look at the log output for the MongoDB pod
+- Also describe the MongoDB pod and notice the output references the configmap
+- When done, delete the resources
+- Port forward: `kubectl port-forward pod/mongodb-deployment-xxx 27017:27017`
+- Connection string: `mongodb://<username>:<password>@localhost/admin`
 
 ---
 
@@ -834,8 +834,8 @@ Multitenancy is a reference to the mode of operation of software where multiple 
 
 ### Approaches
 
-- [Helm](https://helm.sh/)
 - Kubernetes [Operators](https://coreos.com/operators/)
+- [Helm](https://helm.sh/)
 
 ---
 class: center, middle

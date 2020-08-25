@@ -13,3 +13,4 @@ spec:
     args:
     - sleep
     - "1000"
+    resources: {}
