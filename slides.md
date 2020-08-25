@@ -1064,9 +1064,11 @@ In this exercise, a nginx container starts, but after 30 seconds the index.html 
 - Review the template file. Notice there are two resources in this one!
 - Apply to your cluster.
 - Open a browser and verify that you can access it.
-- ``kubectl get all``. Notice the pod’s restarts column.
+- `kubectl get all`. Notice the pod’s restarts column.
 - `kubectl describe pod liveness-http`, and notice the output shows the restarts
-- When done, delete the resources using the template file. `kubectl delete –f probe.yaml`
+- When done, delete the resources using the template file.
+
+  `kubectl delete –f probe.yaml`
 
 ---
 
