@@ -108,3 +108,9 @@ Configuring your own metrics: https://prometheus.io/docs/guides/go-application/#
 
 ![Pluggable Architecture](../assets/images/monitoring/opentelemetry-pluggable.png)
 > Image Credits: https://medium.com/opentelemetry/opentelemetry-beyond-getting-started-5ac43cd0fe26
+
+### Popular Tools
+
+- [Jaeger](https://www.jaegertracing.io/docs/1.18/)
+- [Zipkin](https://zipkin.io/)
+- [Appdash](https://github.com/sourcegraph/appdash)
