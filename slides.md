@@ -1574,9 +1574,13 @@ Let’s tie the Role we created in the last lab to our testuser.
 ###### `serviceaccounts`
 
 - Like Users, these are Subjects, but live inside the cluster and are namespaced.
+
 - Meant for processes that run in Pods.
+
 - For example, if you wrote a custom controller that interacts with the Kubernetes API, it will need to have controlled access to certain API resources.
+
   - If you wrote a BlueGreenDeployment controller, what API resources would it need access to? And what actions would it need?
+
 - We won’t do a lab on this as it is much more involved.
 
 ---
