@@ -614,6 +614,22 @@ class: center, middle
 - Delete when done
 
 ---
+
+#### Exercise: `CronJob`
+
+- File: [examples/specs/cronjob.yaml](https://github.com/AgarwalConsulting/Kubernetes-Training/blob/master/examples/specs/cronjob.yaml)
+
+- Review the file and apply to your cluster
+
+- Review the pods in the cluster, look at output, etc.
+
+- Questions
+  - What happens when you add a sleep in the args?
+  - What happens on a non-zero (failure) exit code?
+
+- Delete when done
+
+---
 class: center, middle
 
 ### DaemonSet

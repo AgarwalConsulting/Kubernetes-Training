@@ -1,18 +1,17 @@
-apiVersion: batch/v1beta1
-kind: CronJob
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: hello
+  name: demo-job
 spec:
-  schedule: "*/1 * * * *"
-  jobTemplate:
+  backoffLimit: 1
+  template:
     spec:
-      template:
-        spec:
-          containers:
-          - name: hello
-            image: busybox
-            args:
-            - /bin/sh
-            - -c
-            - date; echo Hello from the Kubernetes cluster
-          restartPolicy: OnFailure
+      restartPolicy: OnFailure
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        resources: {}
+        args:
+          - /usr/bin/bash
+          - -c
+          - echo "busy work"; sleep 1000
