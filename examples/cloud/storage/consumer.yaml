@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-consumer
+spec:
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      command: ["sh", "-c", "sleep 1000"]
+      resources: {}
+      volumeMounts:
+      - name: shared-logs
+        mountPath: /var/log
+  volumes:
+    - name: shared-logs
+      persistentVolumeClaim:
+          claimName: myclaim

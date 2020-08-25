@@ -45,6 +45,7 @@ resource "google_compute_firewall" "k8s-external-rule" {
       "6443",
       "8000",
       "8080",
+      "30080"
     ]
   }
 
