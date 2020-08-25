@@ -63,3 +63,7 @@ An API object that manages external access to the services in a cluster, typical
 - Let's deploy [`nginx-ingress` controller](https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/), using `helm`
 
 - Review an existing [ingress resource](https://github.com/algogrit/yaes-server/blob/master/devops/k8s/ingress.yaml)
+
+#### Security / [TLS](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls)
+
+You can secure an Ingress by specifying a Secret that contains a TLS private key and certificate. Currently the Ingress only supports a single TLS port, 443, and assumes TLS termination.
