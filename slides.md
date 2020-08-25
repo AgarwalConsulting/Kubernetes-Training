@@ -1570,6 +1570,16 @@ Let’s tie the Role we created in the last lab to our testuser.
 - Try modifying the role and see how it impacts testuser.
 
 ---
+
+###### `serviceaccounts`
+
+- Like Users, these are Subjects, but live inside the cluster and are namespaced.
+- Meant for processes that run in Pods.
+- For example, if you wrote a custom controller that interacts with the Kubernetes API, it will need to have controlled access to certain API resources.
+  - If you wrote a BlueGreenDeployment controller, what API resources would it need access to? And what actions would it need?
+- We won’t do a lab on this as it is much more involved.
+
+---
 class: center, middle
 
 ## SRE / [Observability](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/notes/observability.md)
