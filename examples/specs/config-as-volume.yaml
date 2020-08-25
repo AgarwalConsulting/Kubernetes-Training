@@ -4,11 +4,13 @@ metadata:
   name: dynamic-config
   namespace: default
 data:
-  DYNAMIC_TYPE: this can be any value
-  DYNAMIC_FILE: |
+  THIS_IS_A_VALUE: this can be any value
+  THIS_IS_A_FILE: |
     # Or even multiline value or content,
     # like a `yaml` file
     HELLO: WORLD
+    NEW_KEY: NEW_VALUE
+  THIS_IS_A_NEW_KEY: NEW_VALUE
 
 ---
 
@@ -19,8 +21,8 @@ metadata:
 spec:
   containers:
     - name: test-container
-      image: k8s.gcr.io/busybox
-      command: [ "/bin/sh", "-c", "sleep 100" ]
+      image: ubuntu
+      command: [ "/bin/sh", "-c", "sleep 1000" ]
       volumeMounts:
       - name: config-volume
         mountPath: /etc/config
@@ -31,4 +33,3 @@ spec:
         # Provide the name of the ConfigMap containing the files you want
         # to add to the container
         name: dynamic-config
-  restartPolicy: Never

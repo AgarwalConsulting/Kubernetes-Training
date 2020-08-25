@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-job
+  labels:
+    app: ubuntu
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    resources: {}
+    args:
+      - /usr/bin/bash
+      - -c
+      - echo "busy work"; sleep 1000
+    volumeMounts:
+      - mountPath: /var/node
+        name: some-data-vol
+  volumes:
+    - name: some-data-vol
+      hostPath:
+        path: /
