@@ -67,3 +67,9 @@ An API object that manages external access to the services in a cluster, typical
 #### Security / [TLS](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls)
 
 You can secure an Ingress by specifying a Secret that contains a TLS private key and certificate. Currently the Ingress only supports a single TLS port, 443, and assumes TLS termination.
+
+### [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+
+A network policy is a specification of how groups of pods are allowed to communicate with each other and other network endpoints.
+
+`NetworkPolicy` resources use labels to select pods and define rules which specify what traffic is allowed to the selected pods.
