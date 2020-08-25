@@ -1082,7 +1082,7 @@ Now let’s add a readiness probe so that traffic doesn’t get sent to a down p
 - Open a browser and verify that you can access it.
 - After about a minute, you should no longer get a valid response from any pod, because they all get the index.html file removed.
 - Now update the deployment ([documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)) to contain both a readiness probe (to remove the pod from service when it goes down) and a liveness probe (to restart the container when it fails).
-- Run a watch ``kubectl get all``, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
+- Run a watch `kubectl get all`, and watch the pods as they restart. Notice how the status goes back and forth between 1/1 and 0/1.
 - In a new terminal tab, run a watch `kubectl describe service nginx-service`. Notice the endpoints shifting as the service shuffles pods in and out of service based on their readiness probe status.
 - You should now have a resilient service that stays up. It might occasionally go down if all three pods are broken at the same time. But you get the idea.
 
