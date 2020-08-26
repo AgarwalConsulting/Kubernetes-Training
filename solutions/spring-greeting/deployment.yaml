@@ -6,7 +6,7 @@ spec:
   strategy:
     type: Recreate
   revisionHistoryLimit: 2
-  replicas: 10
+  replicas: 3
   selector:
     matchLabels:
       app: greeting-api

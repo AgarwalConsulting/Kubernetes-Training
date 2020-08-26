@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: gs-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: gs.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: greeting-service
+              servicePort: 3000
