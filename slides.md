@@ -923,8 +923,8 @@ class: center, middle
 
 - Popular use is to centralize many microservices under one name using routing rules (AKA edge service or API gateway). For example:
 
-  `example.com/account` - points to account service
-  `example.com/orders` - points to order service
+  - `example.com/account` - points to account service
+  - `example.com/orders` - points to order service
 
 - Other solutions exist for this. For example, cloud providers have their own L7 load balancers such as Application Load Balancer from AWS. Ingress is just the K8S solution. You can also do it internally with your own app like we will do in the hackathon portion.
 
