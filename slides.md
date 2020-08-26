@@ -1135,7 +1135,7 @@ class: center, middle
 
 - Remove a label
 
-  `kubectl label nodes <node-name> <label-key>=<label-value>-`
+  `kubectl label nodes <node-name> <label-key>-`
 
 - `nodeSelector` is the simplest recommended form of node selection constraint. nodeSelector is a field of PodSpec. It specifies a map of key-value pairs.
 

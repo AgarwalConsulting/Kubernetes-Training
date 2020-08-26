@@ -8,5 +8,6 @@ spec:
   containers:
   - name: nginx-container
     image: nginx
+    resources: {}
   nodeSelector:
     storagetype: ssd
