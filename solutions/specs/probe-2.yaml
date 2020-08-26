@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 5
   selector:
     matchLabels:
       app: nginx
@@ -30,17 +30,13 @@ spec:
             path: /
             port: 80
           failureThreshold: 1
-          periodSeconds: 3
+          periodSeconds: 1
         livenessProbe:
-          # exec:
-          #   command:
-          #     - file
-          #     - /usr/share/nginx/index.html
           httpGet:
             path: /
             port: 80
-          failureThreshold: 1
-          periodSeconds: 3
+          failureThreshold: 2
+          periodSeconds: 1
       initContainers:
       - name: random-wait
         image: busybox:1.28
