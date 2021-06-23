@@ -1,5 +1,15 @@
 # Writing your own operator
 
+## What is an operator?
+
+An **operator** is a controller that encodes human operational knowledge: how do I run and manage a specific piece of complex software.
+
+It's composed of:
+
+- Resources (Pod, ConfigMap, Route [OpenShift only])
+- Controller (ReplicaSet, Deployment, DaemonSet)
+- Domain or Application Specific Knowledge (Installing, Scale, Self-Heal, Clean Up, Update, Backup, Restore)
+
 ## Controller vs Operator
 
 > A **controller** is a loop that reads desired state (spec), observed cluster state (others’ status), and external state, and the reconciles cluster state and external state with the desired state, writing any observations down (to our own status).
