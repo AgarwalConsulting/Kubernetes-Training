@@ -329,6 +329,13 @@ class: center, middle
 ---
 class: center, middle
 
+```bash
+kubectl expose help # --dry-run=client -o yaml
+```
+
+---
+class: center, middle
+
 ##### [Labels & Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)
 
 ---
