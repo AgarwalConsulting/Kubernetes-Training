@@ -1,9 +1,10 @@
 credsfile = ""
-publickeyfile = ""
-
 project_id = ""
-region = ""
-zone = ""
+
+publickeyfile = "~/.ssh/id_ed25519.pub"
+
+region = "us-east1"
+zone = "us-east1-b"
 
 control_vm_name = "k8s-control-101"
 vm_name = "k8s-nodes-101"

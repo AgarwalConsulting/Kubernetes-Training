@@ -41,10 +41,13 @@ resource "google_compute_firewall" "k8s-external-rule" {
     ports = [
       "22",
       "80",
+      "3000",
+      "4245",
       "5000",
       "6443",
       "8000",
       "8080",
+      "12000",
       "30080"
     ]
   }
