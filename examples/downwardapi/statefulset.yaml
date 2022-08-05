@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: sample
+  name: sample
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample
+  serviceName: "sample"
+  template:
+    metadata:
+      labels:
+        app: sample
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        resources: {}
+        args:
+          - /usr/bin/bash
+          - -c
+          - echo "busy work"; sleep 1000
+        volumeMounts:
+        - name: podinfo
+          mountPath: /etc/podinfo
+      volumes:
+        - name: podinfo
+          downwardAPI:
+            items:
+              - path: "labels"
+                fieldRef:
+                  fieldPath: metadata.labels
+              - path: "annotations"
+                fieldRef:
+                  fieldPath: metadata.annotations
+              - path: "name"
+                fieldRef:
+                  fieldPath: metadata.name
