@@ -964,7 +964,7 @@ Review an existing [ingress resource](https://github.com/algogrit/yaes-server/bl
 ---
 class: center, middle
 
-##### Exercise: Write an ingress spec for `spring-greeting`
+##### Exercise: Write an [ingress spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree/master/challenges/spring-greeting/ingress.md) for `spring-greeting`
 
 ---
 

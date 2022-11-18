@@ -16,6 +16,6 @@ metadata:
   name: my-service
 subsets:
   - addresses:
-      - ip: 192.168.0.111 ## Replace with local IP
+      - ip: 192.168.0.100 ## Replace with local IP
     ports:
-      - port: 8080
+      - port: 8000
