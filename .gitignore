@@ -111,3 +111,5 @@ terraform.tfvars
 var/
 manifest.yaml
 manifest.json
+live-examples/
+.envrc
