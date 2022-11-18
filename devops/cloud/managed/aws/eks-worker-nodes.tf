@@ -58,10 +58,10 @@ resource "aws_security_group" "aws-101-worker-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = map(
-    "Name", "${local.worker-name}-sg",
-    "kubernetes.io/cluster/${local.cluster-name}", "owned",
-  )
+  tags = tomap({
+    "Name" = "${local.worker-name}-sg",
+    "kubernetes.io/cluster/${local.cluster-name}" = "owned",
+  })
 }
 
 resource "aws_security_group_rule" "aws-101-worker-ingress-self" {

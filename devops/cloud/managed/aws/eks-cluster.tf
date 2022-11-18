@@ -75,7 +75,7 @@ resource "aws_eks_cluster" "aws-101-eks-cluster" {
   name     = local.cluster-name
   role_arn = aws_iam_role.aws-101-cluster-iam-role.arn
 
-  version =  "1.17"
+  version =  "1.23"
 
   vpc_config {
     security_group_ids = [aws_security_group.aws-101-cluster-sg.id]
