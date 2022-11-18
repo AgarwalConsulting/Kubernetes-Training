@@ -19,3 +19,9 @@ Add the following line:
 ```txt
 127.0.0.1 <host-name>
 ```
+
+## Step 4: Make sure you are able to access the `spring-greeting` app outside the cluster
+
+```bash
+curl -i http://gs.local/greeting
+```
