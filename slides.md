@@ -354,6 +354,16 @@ class: center, middle
 ServiceTypes control the way in which a service is exposed.
 
 ---
+
+- *ClusterIP*
+
+- NodePort
+
+- LoadBalancer
+
+- ExternalName
+
+---
 class: center, middle
 
 #### Exercise: Pods & Services
@@ -365,8 +375,19 @@ Write a [pod spec](https://github.com/AgarwalConsulting/Kubernetes-Training/tree
 #### Exercise: Service continued
 
 - Can we access the service from our own computer at `http://localhost:<node-port>`?
+
 - Now go delete your pod and try the URL again. Oh no! Our service is down!
+
 - Don’t delete the service. We’ll use it again shortly.
+
+---
+class: center, middle
+
+#### Endpoints
+
+*Endpoints track the IP addresses of Pods with matching selectors.*
+
+.content-credits[https://www.stackrox.io/blog/kubernetes-networking-demystified/]
 
 ---
 class: center, middle
@@ -886,13 +907,6 @@ class: center, middle
 class: center, middle
 
 ### Services, Load balancing & Networking
-
----
-class: center, middle
-
-#### Endpoints
-
-*Endpoints track the IP addresses of Pods with matching selectors.*
 
 ---
 
