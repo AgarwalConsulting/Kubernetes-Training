@@ -41,10 +41,10 @@ Let's scale up from one pod to many pods.
    ```
      selector:
        matchLabels:
-         app: greeting-api
+         app: spring-greeting
    ```
 
-   This is how Kubernetes knows which pods relate to this deployment.  It looks for pods that have metadata that includes `app: greeting-api`.  The pods can have additional metadata tags, but to be part of this deployment, they must have at least this tag.
+   This is how Kubernetes knows which pods relate to this deployment.  It looks for pods that have metadata that includes `app: spring-greeting`.  The pods can have additional metadata tags, but to be part of this deployment, they must have at least this tag.
 
 7. Last piece in the `spec` section:
 
@@ -63,7 +63,7 @@ Let's scale up from one pod to many pods.
        metadata:
          name: spring-greeting
          labels:
-           app: greeting-api
+           app: spring-greeting
        spec:
          containers:
          - ...

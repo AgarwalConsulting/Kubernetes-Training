@@ -52,10 +52,10 @@ remove `version`.
 
    ```
      selector:
-       app: greeting-api
+       app: spring-greeting
    ```
 
-   Here we define which pods will get traffic from this service.  The service will locate all pods within the cluster that have `metadata` that includes `app: greeting-api`.  The pods may have other metadata, but without this metadata, they won't receive traffic.
+   Here we define which pods will get traffic from this service.  The service will locate all pods within the cluster that have `metadata` that includes `app: spring-greeting`.  The pods may have other metadata, but without this metadata, they won't receive traffic.
 
    In effect, this metadata match is the glue that connects services and pods.
 
@@ -98,7 +98,7 @@ remove `version`.
 
    This command tells us a lot about the service including the `NodePort` that Kubernetes randomly picked.
 
-4. Open a browser to `http://localhost:NODE_PORT/`, replacing `NODE_PORT` with the `NodePort` you found in step 3.  When I ran step 3, I got port `30012` so I'll browse to `http://localhost:30012`.
+4. Open a browser to `http://<node-internal-ip>:NODE_PORT/`, replacing `NODE_PORT` with the `NodePort` you found in step 3.  When I ran step 3, I got port `30012` so I'll browse to `http://<node-internal-ip>:30012`.
 
 
 ## What happened
