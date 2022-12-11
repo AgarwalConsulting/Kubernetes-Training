@@ -180,6 +180,19 @@ class: center, middle
 ---
 class: center, middle
 
+![Interaction with kubectl](assets/images/interaction-with-kubectl.png)
+
+.image-credits[https://www.cncf.io/blog/2019/08/19/how-kubernetes-works/]
+
+---
+
+class: center, middle
+
+![Docker vs Containerd](assets/images/interaction-with-kubectl-containerd.png)
+
+---
+class: center, middle
+
 So, let's get on with it...
 
 ---
