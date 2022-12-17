@@ -423,7 +423,6 @@ class: center, middle
 #### Natively Supported Controllers (`kind` field)
 
 - ReplicaSet
-- ReplicationController
 - Deployments
 - StatefulSets
 - DaemonSet
@@ -715,7 +714,7 @@ class: center, middle
 
 ---
 
-#### `configmap`
+### `configmap`
 
 - Containers often need several environment variables to function properly so that configuration is externalized. But passing in variables directly to containers is messy.
 
@@ -727,7 +726,7 @@ class: center, middle
 
 ---
 
-#### `secrets`
+### `secrets`
 
 - How do you store sensitive information? Should you include it in a Docker image? How about in a pod spec? Never!
 
